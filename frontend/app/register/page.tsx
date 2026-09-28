@@ -12,7 +12,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 function RegisterContent() {
-  const { registerWithEmail, loginWithGoogle, loginWithGithub, verifyOtp, resendOtp } = useAuth();
+  const { registerWithEmail, verifyOtp, resendOtp } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get('redirect') || '/dashboard';
@@ -93,24 +93,6 @@ function RegisterContent() {
       setError(err.message || "Failed to resend OTP");
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleGoogle = async () => {
-    try {
-      await loginWithGoogle();
-      router.push(redirectUrl);
-    } catch (err: any) {
-      setError(err.message);
-    }
-  };
-
-  const handleGithub = async () => {
-    try {
-      await loginWithGithub();
-      router.push(redirectUrl);
-    } catch (err: any) {
-      setError(err.message);
     }
   };
 
@@ -244,21 +226,6 @@ function RegisterContent() {
             </form>
           )}
 
-          <div className="pt-10 mt-10 border-t border-[#0c111d]">
-            <div className="flex items-center gap-4 mb-6">
-              <span className="text-[10px] font-bold text-[#0c111d] uppercase tracking-wider font-mono-code">OR REGISTER WITH</span>
-              <div className="flex-1 h-px bg-[#0c111d]/20"></div>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <Button onClick={handleGoogle} variant="outline" type="button" className="h-12 rounded-none font-mono-code font-bold text-[11px] uppercase tracking-wider text-[#0c111d] bg-[#ffffff] hover:bg-[#f5f4ef] hover:shadow-[3px_3px_0px_0px_#0c111d] border border-[#0c111d] flex items-center justify-center gap-2 transition-all">
-                Google
-              </Button>
-              <Button onClick={handleGithub} variant="outline" type="button" className="h-12 rounded-none font-mono-code font-bold text-[11px] uppercase tracking-wider text-[#0c111d] bg-[#ffffff] hover:bg-[#f5f4ef] hover:shadow-[3px_3px_0px_0px_#0c111d] border border-[#0c111d] flex items-center justify-center gap-2 transition-all">
-                GitHub
-              </Button>
-            </div>
-          </div>
         </div>
       </main>
 
