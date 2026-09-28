@@ -218,9 +218,9 @@ export function MembershipModal({ isOpen, onClose }: MembershipModalProps) {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="font-mono-code text-xs font-black uppercase tracking-widest text-[#0c111d]">LinkedIn Profile <span className="text-gray-400 font-normal">(Optional)</span></label>
+                    <label className="font-mono-code text-xs font-black uppercase tracking-widest text-[#0c111d]">LinkedIn Profile *</label>
                     <Input 
-                      type="url" name="linkedin_url" value={formData.linkedin_url} onChange={handleChange}
+                      required type="url" name="linkedin_url" value={formData.linkedin_url} onChange={handleChange}
                       className="rounded-none border-2 border-[#0c111d] h-12 font-mono-code text-sm focus-visible:ring-0 focus-visible:border-[#f59e0b] focus-visible:border-4 transition-all"
                       placeholder="https://linkedin.com/in/johndoe"
                     />

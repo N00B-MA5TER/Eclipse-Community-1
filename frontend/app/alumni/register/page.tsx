@@ -17,6 +17,7 @@ export default function AlumniRegisterPage() {
     department: "",
     graduation_year: new Date().getFullYear().toString(),
     current_role: "",
+    linkedin_url: "",
   });
   
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -74,6 +75,7 @@ export default function AlumniRegisterPage() {
     data.append("department", formData.department);
     data.append("graduation_year", formData.graduation_year);
     data.append("current_role", formData.current_role);
+    data.append("linkedin_url", formData.linkedin_url);
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api'}/alumni`, {
@@ -291,6 +293,22 @@ export default function AlumniRegisterPage() {
                     onChange={(e) => setFormData({...formData, current_role: e.target.value})}
                     className="w-full px-4 py-3 bg-[#fcfbf9] border border-[#0c111d]/20 focus:border-[#0c111d] focus:outline-none focus:ring-0 font-mono-code text-sm transition-colors"
                     placeholder="e.g. Software Engineer at Google"
+                  />
+                </div>
+
+                <div className="md:col-span-2">
+                  <label htmlFor="linkedin_url" className="block font-mono-code text-xs font-bold uppercase tracking-widest text-[#0c111d] mb-2">
+                    LinkedIn URL *
+                  </label>
+                  <input
+                    type="url"
+                    id="linkedin_url"
+                    required
+                    maxLength={255}
+                    value={formData.linkedin_url}
+                    onChange={(e) => setFormData({...formData, linkedin_url: e.target.value})}
+                    className="w-full px-4 py-3 bg-[#fcfbf9] border border-[#0c111d]/20 focus:border-[#0c111d] focus:outline-none focus:ring-0 font-mono-code text-sm transition-colors"
+                    placeholder="e.g. https://linkedin.com/in/janedoe"
                   />
                 </div>
               </div>

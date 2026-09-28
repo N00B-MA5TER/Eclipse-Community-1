@@ -63,13 +63,14 @@ else
 fi
 
 # ------------------------------------------
-# 4. Run database migrations
+# 4. Run database migrations & storage link
 # ------------------------------------------
 
 echo ""
-echo "[5/7] Running database migrations..."
+echo "[5/7] Running database migrations & storage link..."
 
 "$PHP" artisan migrate --force
+"$PHP" artisan storage:link --force
 
 # ------------------------------------------
 # 5. Clear Laravel caches
