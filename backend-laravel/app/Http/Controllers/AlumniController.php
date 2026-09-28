@@ -25,6 +25,7 @@ class AlumniController extends Controller
                 'department' => $alumni->department,
                 'graduation_year' => $alumni->graduation_year,
                 'current_role' => $alumni->current_role,
+                'linkedin_url' => $alumni->linkedin_url,
             ];
         });
 
@@ -39,6 +40,7 @@ class AlumniController extends Controller
             'department' => 'required|string|max:150',
             'graduation_year' => 'required|integer|min:1950|max:2100',
             'current_role' => 'required|string|max:150',
+            'linkedin_url' => 'required|url|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -54,6 +56,7 @@ class AlumniController extends Controller
                 'department' => $request->department,
                 'graduation_year' => $request->graduation_year,
                 'current_role' => $request->current_role,
+                'linkedin_url' => $request->linkedin_url,
                 'status' => 'pending',
             ]);
         } catch (\Throwable $e) {

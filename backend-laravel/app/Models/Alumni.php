@@ -12,6 +12,7 @@ class Alumni extends Model
         'department',
         'graduation_year',
         'current_role',
+        'linkedin_url',
         'status',
     ];
 

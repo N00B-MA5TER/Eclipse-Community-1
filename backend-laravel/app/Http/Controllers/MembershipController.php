@@ -16,7 +16,7 @@ class MembershipController extends Controller
             'department' => 'required|string|max:255',
             'student_id' => 'required|string|max:255',
             'year_semester' => 'required|string|max:255',
-            'linkedin_url' => 'nullable|url|max:255',
+            'linkedin_url' => 'required|url|max:255',
             'github_url' => 'nullable|url|max:255',
         ]);
 
