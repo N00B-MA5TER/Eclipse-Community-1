@@ -21,6 +21,7 @@ export default function AdminCalendarPage() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEvent, setEditingEvent] = useState<CalendarEvent | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -39,7 +40,7 @@ export default function AdminCalendarPage() {
   const fetchEvents = async () => {
     try {
       setLoading(true);
-      const res = await fetch("http://127.0.0.1:8080/api/calendar-events");
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8080/api'}/calendar-events`);
       if (res.ok) {
         const data = await res.json();
         setEvents(data);
@@ -86,10 +87,12 @@ export default function AdminCalendarPage() {
     if (!user) return;
 
     try {
+      setError(null);
       const token = await user.getIdToken();
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8080/api';
       const url = editingEvent 
-        ? `http://127.0.0.1:8080/api/admin/calendar-events/${editingEvent.id}`
-        : `http://127.0.0.1:8080/api/admin/calendar-events`;
+        ? `${baseUrl}/admin/calendar-events/${editingEvent.id}`
+        : `${baseUrl}/admin/calendar-events`;
         
       const method = editingEvent ? 'PUT' : 'POST';
 
@@ -105,8 +108,13 @@ export default function AdminCalendarPage() {
       if (res.ok) {
         closeModal();
         fetchEvents();
+      } else {
+        const errorData = await res.json().catch(() => null);
+        setError(errorData?.message || errorData?.error || "Failed to save event. Please check the inputs.");
+        console.error("Failed to save calendar event", res.status, errorData);
       }
     } catch (error) {
+      setError("An unexpected error occurred. Please try again.");
       console.error("Failed to save calendar event", error);
     }
   };
@@ -117,7 +125,8 @@ export default function AdminCalendarPage() {
 
     try {
       const token = await user.getIdToken();
-      const res = await fetch(`http://127.0.0.1:8080/api/admin/calendar-events/${id}`, {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8080/api';
+      const res = await fetch(`${baseUrl}/admin/calendar-events/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -226,10 +235,16 @@ export default function AdminCalendarPage() {
               <h2 className="text-xl font-bold text-slate-900">
                 {editingEvent ? "Edit Event" : "Add Event"}
               </h2>
-              <button onClick={closeModal} className="text-slate-400 hover:text-slate-600 transition-colors">
+              <button onClick={closeModal} type="button" className="text-slate-400 hover:text-slate-600 transition-colors">
                 <X className="w-5 h-5" />
               </button>
             </div>
+            
+            {error && (
+              <div className="mx-6 mt-4 p-3 bg-red-50 text-red-600 rounded-lg text-sm border border-red-100">
+                {error}
+              </div>
+            )}
             
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <div>
