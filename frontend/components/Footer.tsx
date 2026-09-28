@@ -43,9 +43,9 @@ export function Footer() {
             </p>
             <div className="space-y-2 text-[#434656]">
               <p>DESIGN &amp; ARCHITECT BY:</p>
-              <p className="font-bold text-[#0c111d]">shubhsanket sharma</p>
+              <p className="font-bold text-[#0c111d]">Shubhsanket Sharma</p>
               <p className="pt-2">DEPLOY BY:</p>
-              <p className="font-bold text-[#0c111d]">rajdeep nandi &amp; Debjit chowdhury</p>
+              <p className="font-bold text-[#0c111d]">Rajdeep Nandy &amp; Debjit Chowdhury</p>
               <p className="text-[11px] text-[#737688] pt-2">TYPES: Playfair Display / Plus Jakarta Sans / Space Grotesk / Bodoni Moda</p>
             </div>
           </div>
