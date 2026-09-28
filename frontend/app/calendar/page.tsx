@@ -31,7 +31,7 @@ export default function CalendarPage() {
   const fetchEvents = async () => {
     try {
       setLoading(true);
-      const res = await fetch('http://127.0.0.1:8080/api/calendar-events');
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8080/api'}/calendar-events`);
       if (res.ok) {
         const data = await res.json();
         setEvents(data);
@@ -75,7 +75,10 @@ export default function CalendarPage() {
   const days = getDaysInMonth(currentDate);
 
   const getEventsForDate = (date: Date) => {
-    const dateString = date.toISOString().split('T')[0];
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const dateString = `${year}-${month}-${day}`;
     return events.filter(e => e.date === dateString);
   };
 
