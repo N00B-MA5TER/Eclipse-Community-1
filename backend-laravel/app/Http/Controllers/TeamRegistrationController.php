@@ -66,8 +66,12 @@ class TeamRegistrationController extends Controller
                 'status' => 'pending'
             ]);
             
-            // Broadcast event for real-time notification
-            event(new \App\Events\TeamInviteReceived($invite));
+            // Broadcast event for real-time notification (best-effort — don't crash if Pusher is unavailable)
+            try {
+                event(new \App\Events\TeamInviteReceived($invite));
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::warning('Broadcasting failed (TeamInviteReceived): ' . $e->getMessage());
+            }
         }
 
         return response()->json(['message' => 'Team created and invites sent successfully!']);
@@ -123,7 +127,12 @@ class TeamRegistrationController extends Controller
             $members = TeamMember::with('user')->where('team_id', $team->id)->get();
             foreach ($members as $m) {
                 if ($m->user && $m->user->email) {
-                    event(new \App\Events\TeamCompletedEvent($m->user->email, $team));
+                    // Broadcast best-effort — don't crash if Pusher is unavailable
+                    try {
+                        event(new \App\Events\TeamCompletedEvent($m->user->email, $team));
+                    } catch (\Exception $e) {
+                        \Illuminate\Support\Facades\Log::warning('Broadcasting failed (TeamCompletedEvent): ' . $e->getMessage());
+                    }
                 }
             }
         }
