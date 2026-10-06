@@ -49,6 +49,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { Suspense } from "react";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -72,7 +74,9 @@ export default function RootLayout({
             <TooltipProvider>
               {children}
               <LegacyMobileNavigation />
-              <RealTimeNotifications />
+              <Suspense fallback={null}>
+                <RealTimeNotifications />
+              </Suspense>
             </TooltipProvider>
           </AuthProvider>
         </SmoothScrolling>
