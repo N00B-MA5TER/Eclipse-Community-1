@@ -97,7 +97,7 @@ export default function AdminEventDetailsPage() {
       </Link>
 
       {/* Premium Dark Header */}
-      <div className="bg-[#0f172a] rounded-[2rem] shadow-none border border-black overflow-hidden mb-8 relative border border-black">
+      <div className="bg-black rounded-none shadow-none border border-black overflow-hidden mb-8 relative border border-black">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
         <div className={`absolute top-0 right-0 w-96 h-96 rounded-none blur-[100px] -z-0 opacity-40 ${event.type === 'hackathon' ? 'bg-fuchsia-600' : 'bg-black text-white'} translate-x-1/3 -translate-y-1/3 pointer-events-none`}></div>
         <div className={`absolute bottom-0 left-0 w-96 h-96 rounded-none blur-[100px] -z-0 opacity-20 bg-black text-white -translate-x-1/3 translate-y-1/3 pointer-events-none`}></div>
@@ -134,7 +134,7 @@ export default function AdminEventDetailsPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         
         {/* Stat 1 */}
-        <div className="bg-white rounded-[2rem] border border-black p-6 md:p-8 shadow-none border border-black hover:shadow-none border border-black transition-all duration-300 group relative overflow-hidden">
+        <div className="bg-white rounded-none border border-black p-6 md:p-8 shadow-none border border-black hover:shadow-none border border-black transition-all duration-300 group relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-fuchsia-50 rounded-none blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
           <div className="flex items-start justify-between mb-6 relative z-10">
             <div className="w-14 h-14 bg-fuchsia-50 rounded-none flex items-center justify-center group-hover:scale-110 transition-transform shadow-none border border-black border border-fuchsia-100">
@@ -151,7 +151,7 @@ export default function AdminEventDetailsPage() {
         </div>
 
         {/* Stat 2 */}
-        <div className="bg-white rounded-[2rem] border border-black p-6 md:p-8 shadow-none border border-black hover:shadow-none border border-black transition-all duration-300 group relative overflow-hidden">
+        <div className="bg-white rounded-none border border-black p-6 md:p-8 shadow-none border border-black hover:shadow-none border border-black transition-all duration-300 group relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-none blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
           <div className="flex items-start justify-between mb-6 relative z-10">
             <div className="w-14 h-14 bg-blue-50 rounded-none flex items-center justify-center group-hover:scale-110 transition-transform shadow-none border border-black border border-blue-100">
@@ -168,7 +168,7 @@ export default function AdminEventDetailsPage() {
         </div>
 
         {/* Stat 3 - Engagement */}
-        <div className="bg-white   rounded-[2rem] border border-blue-500 p-6 md:p-8 shadow-none border border-black hover:shadow-none border border-black transition-all duration-300 group relative overflow-hidden text-white">
+        <div className="bg-white   rounded-none border border-blue-500 p-6 md:p-8 shadow-none border border-black hover:shadow-none border border-black transition-all duration-300 group relative overflow-hidden text-white">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-none blur-3xl"></div>
           <div className="flex items-start justify-between mb-6 relative z-10">
             <div className="w-14 h-14 bg-white/10 rounded-none flex items-center justify-center group-hover:scale-110 transition-transform  border border-white/20">
@@ -191,7 +191,7 @@ export default function AdminEventDetailsPage() {
       </div>
 
       {/* Premium Teams Data Table */}
-      <div className="bg-white rounded-[2rem] shadow-none border border-black shadow-none border border-black-200/50 border border-black overflow-hidden relative">
+      <div className="bg-white rounded-none shadow-none border border-black shadow-none border border-black-200/50 border border-black overflow-hidden relative">
         <div className="p-6 md:p-8 border-b border-black flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white /80 to-white ">
           <div>
             <h2 className="text-2xl font-heading uppercase tracking-tight font-bold text-gray-900 font-heading mb-1 flex items-center gap-2">
@@ -227,7 +227,7 @@ export default function AdminEventDetailsPage() {
               {filteredTeams.length === 0 ? (
                 <tr>
                   <td colSpan={4} className="px-5 md:px-8 py-16 md:py-24 text-center">
-                    <div className="w-20 h-20 bg-white rounded-[2rem] flex items-center justify-center mx-auto mb-6 border border-black shadow-none border border-black">
+                    <div className="w-20 h-20 bg-white rounded-none flex items-center justify-center mx-auto mb-6 border border-black shadow-none border border-black">
                       <Component className="w-10 h-10 text-gray-300" />
                     </div>
                     <p className="text-gray-900 font-bold text-[18px] mb-2">No teams found.</p>

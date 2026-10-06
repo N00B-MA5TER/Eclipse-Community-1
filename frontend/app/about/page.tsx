@@ -37,133 +37,148 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-[#f59e0b] relative broadsheet-grid">
+    <div className="min-h-screen bg-[#fff8f2] text-[#30231e] font-sans selection:bg-[#f4a261] selection:text-[#30231e] relative">
       <Navbar />
-      <main className="w-full pt-0 bg-white min-h-screen">
+      <main className="w-full pt-0 bg-[#fff8f2] min-h-screen">
         <div className="flex flex-col w-full">
-          {/*  Section 1: Editorial Broadsheet Masthead & Manifesto  */}
+          {/* About masthead and manifesto */}
           <section
-            className="border-b border-black bg-white px-4 sm:px-8 lg:px-12 py-8 lg:py-12 relative overflow-hidden"
+            className="border-b border-[#eadbd1] bg-[#fff8f2] px-4 sm:px-8 lg:px-12 py-10 lg:py-16 relative overflow-hidden"
             data-purpose="editorial-headline-banner"
           >
-            <div className="max-w-[80rem] mx-auto flex flex-col gap-8">
-              {/*  Top Meta Bar Track  */}
-              <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-neutral-200">
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center gap-2 px-3 py-1 bg-black text-white rounded-none border border-black font-mono text-[11px] uppercase tracking-widest font-semibold">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#f59e0b]"></span>
-                    ■ WHO WE ARE
-                  </span>
-                  <span className="hidden sm:inline-flex text-neutral-500 font-mono text-xs tracking-wider">
-                    DOC_REF: ECLL-ARCHIVE-V26
-                  </span>
-                </div>
-                <div className="flex items-center gap-4 font-mono text-xs text-neutral-600 uppercase tracking-wider">
-                  <span>SECURITY LEVEL: PUBLIC DISCLOSURE</span>
-                  <span className="text-black font-bold flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-[#f59e0b] animate-pulse"></span>{" "}
-                    SYNCHRONIZED
-                  </span>
-                </div>
+            <div className="max-w-[80rem] mx-auto flex flex-col gap-8 lg:gap-10">
+              <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#eadbd1]">
+                <span className="inline-flex items-center gap-2 text-[#a9562d] font-mono text-[11px] uppercase tracking-[0.2em] font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-[#f4a261]"></span>
+                  WHO WE ARE
+                </span>
+                <span className="font-mono text-[11px] text-[#8d7770] uppercase tracking-[0.12em]">
+                  DIATM · DURGAPUR, INDIA
+                </span>
               </div>
-              {/*  Editorial Title Block  */}
-              <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pt-2">
+              <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pt-1">
                 <div>
-                  <div className="font-mono text-xs text-black font-bold tracking-widest uppercase mb-2">
-                    FOUNDATIONAL DISCLOSURE // ARCHIVE ENTRY NO. 01
+                  <div className="font-mono text-[11px] text-[#a9562d] tracking-[0.18em] uppercase mb-3">
+                    A STUDENT-LED TECHNOLOGY COMMUNITY
                   </div>
-                  <h1 className="font-editorial-serif text-5xl sm:text-7xl xl:text-[5.5rem] font-bold tracking-tight text-black leading-[0.98]">
+                  <h1 className="font-heading text-5xl sm:text-7xl xl:text-[5.5rem] font-semibold tracking-[-0.055em] text-[#30231e] leading-[0.98]">
                     About{" "}
-                    <span className="italic font-normal text-black">
+                    <span className="font-normal text-[#a9562d]">
                       ECLIPSE
                     </span>
                   </h1>
                 </div>
-                <div className="lg:text-right font-mono text-xs text-neutral-600 space-y-1">
-                  <p className="font-bold text-black uppercase tracking-wider">
+                <div className="lg:text-right font-mono text-[11px] text-[#8d7770] space-y-1.5 leading-relaxed">
+                  <p className="font-semibold text-[#30231e] uppercase tracking-[0.08em]">
                     DURGAPUR INSTITUTE OF ADVANCED TECHNOLOGY &amp; MANAGEMENT
                   </p>
-                  <p className="text-neutral-500">
+                  <p>
                     DEPARTMENT OF COMPUTER SCIENCE &amp; ENGINEERING / IT
                   </p>
-                  <div className="inline-block mt-2 px-2.5 py-0.5 bg-[#f59e0b] text-black font-mono text-[11px] font-bold tracking-widest uppercase">
-                    CHAPTER ID: 155 // EST. 2026
+                  <div className="mt-2 text-[#a9562d] tracking-[0.12em] uppercase">
+                    CHAPTER ID: 155 · EST. 2026
                   </div>
                 </div>
               </div>
-              {/*  Hero Manifesto Framing Card with Architectural Corner Marks & Sharp Borders  */}
-              <div className="relative bg-white border border-black p-6 sm:p-8 lg:p-12 shadow-[6px_6px_0px_0px_#000000] overflow-hidden">
-                {/*  Architectural Corner Accents  */}
-                <div className="absolute -top-1.5 -left-1.5 w-3 h-3 border-t-2 border-l-2 border-black"></div>
-                <div className="absolute -top-1.5 -right-1.5 w-3 h-3 border-t-2 border-r-2 border-black"></div>
-                <div className="absolute -bottom-1.5 -left-1.5 w-3 h-3 border-b-2 border-l-2 border-black"></div>
-                <div className="absolute -bottom-1.5 -right-1.5 w-3 h-3 border-b-2 border-r-2 border-black"></div>
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                  <div className="lg:col-span-8 flex flex-col justify-between space-y-6">
-                    <div>
-                      <div className="inline-flex items-center gap-2 px-2.5 py-0.5 border border-black bg-neutral-100 text-black font-mono text-[10px] uppercase tracking-widest font-bold mb-4">
-                        OFFICIAL MANDATE &amp; MANIFESTO
-                      </div>
-                      <blockquote className="font-editorial-serif text-2xl sm:text-3xl lg:text-4xl text-black leading-tight font-bold tracking-tight border-l-4 border-black pl-5">
-                        “ECLIPSE is the Official Tech Community of DIATM — a
-                        multidisciplinary ecosystem where technology,
-                        creativity, research, and culture converge.”
-                      </blockquote>
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 border-t border-[#eadbd1] pt-8 lg:pt-10">
+                <div className="lg:col-span-8 flex flex-col justify-between gap-9">
+                  <div>
+                    <div className="font-mono text-[10px] text-[#a9562d] uppercase tracking-[0.18em] mb-4">
+                      OFFICIAL MANDATE &amp; MANIFESTO
                     </div>
-                    <div className="pt-6 border-t border-neutral-200 grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs text-neutral-600">
-                      <div className="border-l-2 border-black pl-3 py-1 bg-neutral-50">
-                        <span className="block text-neutral-400 uppercase text-[10px] tracking-wider">
-                          FOUNDED
-                        </span>
-                        <span className="font-bold text-black">
-                          Durgapur, WB
-                        </span>
-                      </div>
-                      <div className="border-l-2 border-black pl-3 py-1 bg-neutral-50">
-                        <span className="block text-neutral-400 uppercase text-[10px] tracking-wider">
-                          AFFILIATION
-                        </span>
-                        <span className="font-bold text-black">
-                          Dept. of CSE &amp; IT
-                        </span>
-                      </div>
-                      <div className="border-l-2 border-[#f59e0b] pl-3 py-1 bg-[#f59e0b]/10">
-                        <span className="block text-neutral-500 uppercase text-[10px] tracking-wider">
-                          CHAPTER
-                        </span>
-                        <span className="font-bold text-black">
-                          Chapter ID: 155
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  {/*  Editorial Metric Inset Console  */}
-                  <div className="lg:col-span-4 bg-neutral-50 border border-black p-6 flex flex-col justify-between space-y-6">
-                    <div className="flex items-center justify-between pb-3 border-b border-neutral-200">
-                      <span className="font-mono text-xs text-neutral-500 uppercase font-bold tracking-wider">
-                        CLUB REGISTRY
-                      </span>
-                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-[#f59e0b]/20 border border-[#f59e0b] text-black text-[10px] font-mono font-bold uppercase">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#f59e0b] animate-ping"></span>
-                        ACTIVE
-                      </span>
-                    </div>
-                    <div className="space-y-2">
-                      <span className="font-editorial-serif text-3xl font-extrabold text-black tracking-tight block">
-                        ACTIVE CHAPTER
-                      </span>
-                      <p className="font-sans text-xs text-neutral-700 leading-relaxed">
-                        Centralized campus operating engine orchestrating
-                        technological symposia, research clusters, and design
-                        incubators.
+                    <blockquote className="font-heading text-2xl sm:text-3xl lg:text-[2.6rem] text-[#30231e] leading-[1.18] font-medium tracking-[-0.035em] max-w-4xl mb-8">
+                      “ECLIPSE is the Official Tech Community of DIATM — a
+                      multidisciplinary ecosystem where technology,
+                      creativity, research, and culture converge.”
+                    </blockquote>
+
+                    {/* Mission & Vision Added Content */}
+                    <div className="space-y-4 font-sans text-[#715e55] text-sm md:text-base leading-relaxed max-w-3xl mb-8">
+                      <p>
+                        <strong className="text-[#30231e] font-semibold">
+                          ECLIPSE
+                        </strong>{" "}
+                        empowers{" "}
+                        <em className="font-serif italic font-medium text-[#30231e]">
+                          thinkers, builders, researchers, and creators
+                        </em>{" "}
+                        through hands-on innovation, interdisciplinary
+                        collaboration, experimentation, and real-world problem
+                        solving.
+                      </p>
+                      <p>
+                        We strive to{" "}
+                        <em className="font-serif italic text-[#30231e]">
+                          learn without limits, build without boundaries, and
+                          challenge what already exists
+                        </em>{" "}
+                        — creating an ecosystem where every member has the freedom
+                        to explore, fail, evolve, and create what comes next.
                       </p>
                     </div>
-                    <div className="pt-4 border-t border-neutral-200 flex items-center justify-between font-mono text-[11px] text-neutral-600">
-                      <span>LAT: 23.5204° N</span>
-                      <span>LONG: 87.3119° E</span>
+
+                    <div className="mt-8 pt-8 border-t border-[#eadbd1]">
+                      <div className="font-mono text-[10px] text-[#a9562d] uppercase tracking-[0.18em] mb-4">
+                        VISION STATEMENT
+                      </div>
+                      <blockquote className="font-heading text-xl sm:text-2xl font-bold leading-snug text-[#30231e] mb-6">
+                        “ECLIPSE exists to build the future, not simply follow it.”
+                      </blockquote>
+                      <ul className="space-y-4 font-sans text-[#715e55] text-sm md:text-base leading-relaxed max-w-3xl list-none">
+                        <li className="flex items-start">
+                          <span className="mr-3 mt-1 text-[#f4a261]">■</span>
+                          <span>
+                            <strong className="text-[#30231e] font-bold uppercase tracking-wider text-xs">Converge & Speculate:</strong> 
+                            <br/>Uniting computing, design, and hardware to architect speculative systems before industry demand materializes.
+                          </span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="mr-3 mt-1 text-[#f4a261]">■</span>
+                          <span>
+                            <strong className="text-[#30231e] font-bold uppercase tracking-wider text-xs">Fearless Experimentation:</strong> 
+                            <br/>Empowering builders to take high-stakes technical risks in autonomous sandboxes without fear of failure.
+                          </span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="mr-3 mt-1 text-[#f4a261]">■</span>
+                          <span>
+                            <strong className="text-[#30231e] font-bold uppercase tracking-wider text-xs">Beyond Convention:</strong> 
+                            <br/>Rejecting standard collegiate limitations to ship production-grade systems and published research globally.
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="pt-5 border-t border-[#eadbd1] grid grid-cols-1 sm:grid-cols-3 gap-5 font-mono text-[11px] text-[#8d7770]">
+                    <div>
+                      <span className="block text-[#b49c90] uppercase tracking-[0.14em] mb-1">LOCATION</span>
+                      <span className="font-semibold text-[#30231e]">Durgapur, WB</span>
+                    </div>
+                    <div>
+                      <span className="block text-[#b49c90] uppercase tracking-[0.14em] mb-1">AFFILIATION</span>
+                      <span className="font-semibold text-[#30231e]">Dept. of CSE &amp; IT</span>
+                    </div>
+                    <div>
+                      <span className="block text-[#b49c90] uppercase tracking-[0.14em] mb-1">CHAPTER</span>
+                      <span className="font-semibold text-[#30231e]">Chapter ID: 155</span>
                     </div>
                   </div>
                 </div>
+                <aside className="lg:col-span-4 lg:border-l lg:border-[#eadbd1] lg:pl-8 flex flex-col justify-between gap-6">
+                  <div className="flex items-center gap-2 font-mono text-[10px] text-[#a9562d] uppercase tracking-[0.16em]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#f4a261]"></span>
+                    ACTIVE CHAPTER
+                  </div>
+                  <p className="font-sans text-sm sm:text-base text-[#715e55] leading-relaxed">
+                    Centralized campus operating engine orchestrating
+                    technological symposia, research clusters, and design
+                    incubators.
+                  </p>
+                  <div className="pt-4 border-t border-[#eadbd1] flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] text-[#9b8478]">
+                    <span>LAT: 23.5204° N</span>
+                    <span>LONG: 87.3119° E</span>
+                  </div>
+                </aside>
               </div>
             </div>
           </section>
@@ -228,44 +243,7 @@ export default function AboutPage() {
                         </span>
                       </div>
                     </div>
-                    {/*  Telemetry Metrics Inset  */}
-                    <div className="bg-neutral-50 border border-black p-5 space-y-4">
-                      <div className="flex items-center justify-between pb-2 border-b border-neutral-200 font-mono text-xs">
-                        <span className="font-bold text-black uppercase tracking-widest flex items-center gap-1.5">
-                          <span className="w-2 h-2 bg-[#f59e0b]"></span> INDEX
-                          METRICS
-                        </span>
-                        <span className="text-neutral-500 uppercase">
-                          TELEMETRY MATRIX
-                        </span>
-                      </div>
-                      <div className="grid grid-cols-3 gap-3">
-                        <div className="bg-white border border-black p-3 text-center shadow-[2px_2px_0px_0px_#000000]">
-                          <span className="font-editorial-serif text-2xl font-bold text-black block">
-                            {stats.builders}+
-                          </span>
-                          <span className="font-mono text-[10px] text-neutral-500 uppercase mt-0.5 block font-bold">
-                            Builders
-                          </span>
-                        </div>
-                        <div className="bg-white border border-black p-3 text-center shadow-[2px_2px_0px_0px_#000000]">
-                          <span className="font-editorial-serif text-2xl font-bold text-black block">
-                            {String(stats.corePillars).padStart(2, '0')}
-                          </span>
-                          <span className="font-mono text-[10px] text-neutral-500 uppercase mt-0.5 block font-bold">
-                            Core Pillars
-                          </span>
-                        </div>
-                        <div className="bg-white border border-black p-3 text-center shadow-[2px_2px_0px_0px_#000000]">
-                          <span className="font-editorial-serif text-2xl font-bold text-black block">
-                            {stats.openSource}%
-                          </span>
-                          <span className="font-mono text-[10px] text-[#f59e0b] uppercase mt-0.5 block font-bold">
-                            Open Source
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+
                   </div>
                 </div>
               </div>
@@ -324,9 +302,7 @@ export default function AboutPage() {
                   </div>
                   <div className="pt-8 border-t border-neutral-200 mt-6 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-black group-hover:text-[#f59e0b] transition-colors">
                     <span>TRACK: CORE ECOSYSTEM</span>
-                    <span className="material-symbols-outlined text-[16px]">
-                      arrow_forward
-                    </span>
+
                   </div>
                 </div>
                 {/*  Pillar 02  */}
@@ -356,9 +332,7 @@ export default function AboutPage() {
                   </div>
                   <div className="pt-8 border-t border-neutral-200 mt-6 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-black group-hover:text-[#f59e0b] transition-colors">
                     <span>TRACK: LAB PRACTICE</span>
-                    <span className="material-symbols-outlined text-[16px]">
-                      arrow_forward
-                    </span>
+
                   </div>
                 </div>
                 {/*  Pillar 03  */}
@@ -389,9 +363,7 @@ export default function AboutPage() {
                   </div>
                   <div className="pt-8 border-t border-neutral-200 mt-6 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-black group-hover:text-[#f59e0b] transition-colors">
                     <span>TRACK: SYNERGISTIC FLOW</span>
-                    <span className="material-symbols-outlined text-[16px]">
-                      arrow_forward
-                    </span>
+
                   </div>
                 </div>
                 {/*  Pillar 04 (Spans 2 cols on lg)  */}
@@ -467,9 +439,7 @@ export default function AboutPage() {
                   </div>
                   <div className="pt-8 border-t border-neutral-200 mt-6 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-black group-hover:text-[#f59e0b] transition-colors">
                     <span>TRACK: FUTURE PROTOCOLS</span>
-                    <span className="material-symbols-outlined text-[16px]">
-                      arrow_forward
-                    </span>
+
                   </div>
                 </div>
               </div>
@@ -505,22 +475,13 @@ export default function AboutPage() {
                       </span>
                     </div>
                     <div className="font-editorial-serif text-3xl font-bold text-black">
-                      {stats.builders}+ Builders
+                      14+ Members
                     </div>
                     <p className="font-sans text-xs text-neutral-600 mt-2 leading-relaxed">
                       Cross-disciplinary engineers, UI/UX architects, ML
                       practitioners, and systems enthusiasts representing DIATM
                       batch cohorts.
                     </p>
-                  </div>
-                  <div className="pt-6 border-t border-neutral-200 mt-6 space-y-2">
-                    <div className="flex justify-between font-mono text-[10px] text-neutral-600 font-bold uppercase">
-                      <span>CAPACITY: 82%</span>
-                      <span className="text-black">SLOTS RESERVED</span>
-                    </div>
-                    <div className="w-full bg-neutral-100 border border-black h-3 p-0.5">
-                      <div className="bg-black h-full" style={{ width: '82%' }}></div>
-                    </div>
                   </div>
                 </div>
                 {/*  Tile 2: Primary Vectors  */}
@@ -569,27 +530,25 @@ export default function AboutPage() {
                     <div className="flex items-center justify-between text-neutral-500 font-mono text-[11px] uppercase font-bold mb-4 pb-2 border-b border-neutral-200">
                       <span className="flex items-center gap-1.5 text-black">
                         <span className="w-1.5 h-1.5 bg-[#f59e0b]"></span>{" "}
-                        ADMISSIONS TELEMETRY
+                        COMMUNITY EVENTS
                       </span>
                       <span className="material-symbols-outlined text-[18px] text-black">
-                        how_to_reg
+                        event
                       </span>
                     </div>
                     <span className="font-editorial-serif text-3xl font-bold text-black block">
-                      Cohort 2026 Active
+                      Build & Innovate
                     </span>
                     <p className="font-sans text-xs text-neutral-600 mt-2 leading-relaxed">
-                      Open calls for junior developers, researchers, and event
-                      designers are undergoing review cycles.
+                      Engage in high-octane hackathons, technical workshops, and weekly meetups designed to push your boundaries.
                     </p>
                   </div>
                   <div className="pt-6 border-t border-neutral-200 mt-6">
                     <a
+                      href="/gallery/events"
                       className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 border border-black bg-black text-white hover:bg-[#f59e0b] hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-colors shadow-[2px_2px_0px_0px_#000000] hover:shadow-none"
-                      data-path="membership"
-                      href="#"
                     >
-                      <span>ACCESS RECRUITMENT PORTAL</span>
+                      <span>EVENT GALLERY</span>
                       <span className="material-symbols-outlined text-[16px]">
                         arrow_outward
                       </span>

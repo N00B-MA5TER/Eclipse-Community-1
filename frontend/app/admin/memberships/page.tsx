@@ -188,7 +188,7 @@ export default function AdminMembershipsPage() {
           { label: "Approved View", value: summary.approved, color: "bg-emerald-50 text-emerald-700" },
           { label: "Rejected View", value: summary.rejected, color: "bg-red-50 text-red-700" }
         ].map((stat, i) => (
-          <div key={i} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center justify-center text-center">
+          <div key={i} className="bg-white p-6 rounded-none border border-slate-100 shadow-sm flex flex-col items-center justify-center text-center">
             <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-3 ${stat.color}`}>
               <Users className="w-5 h-5" />
             </div>
@@ -199,13 +199,13 @@ export default function AdminMembershipsPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col sm:flex-row gap-4 items-center justify-between">
+      <div className="bg-white p-4 rounded-none border border-slate-100 shadow-sm flex flex-col sm:flex-row gap-4 items-center justify-between">
         <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-2 sm:pb-0">
           {["All", "Pending", "Approved", "Rejected"].map((status) => (
             <button
               key={status}
               onClick={() => { setStatusFilter(status); setPage(1); }}
-              className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors ${
+              className={`px-4 py-2 rounded-none text-sm font-medium whitespace-nowrap transition-colors ${
                 statusFilter === status 
                   ? "bg-slate-900 text-white" 
                   : "bg-slate-50 text-slate-600 hover:bg-slate-100"
@@ -222,13 +222,13 @@ export default function AdminMembershipsPage() {
             placeholder="Search by name, email, or ID..." 
             value={searchQuery}
             onChange={(e) => { setSearchQuery(e.target.value); setPage(1); }}
-            className="w-full pl-9 h-11 bg-slate-50 border-transparent rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500"
+            className="w-full pl-9 h-11 bg-slate-50 border-transparent rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500"
           />
         </div>
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-none border border-slate-100 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm text-slate-600">
             <thead className="bg-slate-50 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
@@ -323,7 +323,7 @@ export default function AdminMembershipsPage() {
 
       {/* View Modal */}
       <Dialog open={isViewModalOpen} onOpenChange={setIsViewModalOpen}>
-        <DialogContent className="sm:max-w-[600px] p-0 overflow-hidden bg-white rounded-2xl border-0 shadow-2xl">
+        <DialogContent className="sm:max-w-[600px] p-0 overflow-hidden bg-white rounded-none border-0 shadow-2xl">
           {selectedMember && (
             <>
               <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex justify-between items-start">

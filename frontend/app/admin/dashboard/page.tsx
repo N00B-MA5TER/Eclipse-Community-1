@@ -53,7 +53,7 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         
         {/* Card 1 */}
-        <div className="bg-white p-6 rounded-[2rem] shadow-none border border-black border border-black relative overflow-hidden group hover:border-blue-100 transition-colors">
+        <div className="bg-white p-6 rounded-none shadow-none border border-black border border-black relative overflow-hidden group hover:border-blue-100 transition-colors">
           <div className="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-blue-50 rounded-none blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
           <div className="flex items-start justify-between relative z-10">
             <div>
@@ -71,7 +71,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Card 2 */}
-        <div className="bg-white p-6 rounded-[2rem] shadow-none border border-black border border-black relative overflow-hidden group hover:border-fuchsia-100 transition-colors">
+        <div className="bg-white p-6 rounded-none shadow-none border border-black border border-black relative overflow-hidden group hover:border-fuchsia-100 transition-colors">
           <div className="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-fuchsia-50 rounded-none blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
           <div className="flex items-start justify-between relative z-10">
             <div>
@@ -88,7 +88,7 @@ export default function AdminDashboard() {
         </div>
         
         {/* Card 3 */}
-        <div className="bg-[#0f172a] p-6 rounded-[2rem] shadow-none border border-black relative overflow-hidden text-white border border-black">
+        <div className="bg-black p-6 rounded-none shadow-none border border-black relative overflow-hidden text-white border border-black">
           <div className="absolute inset-0 bg-white /20 to-transparent"></div>
           <div className="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-blue-500/20 rounded-none blur-3xl"></div>
           <div className="flex items-start justify-between relative z-10">
@@ -108,13 +108,13 @@ export default function AdminDashboard() {
       </div>
 
       {/* Main Content Area */}
-      <div className="bg-white rounded-[2rem] shadow-none border border-black border border-black p-12 text-center max-w-3xl mx-auto mt-12 relative overflow-hidden">
+      <div className="bg-white rounded-none shadow-none border border-black border border-black p-12 text-center max-w-3xl mx-auto mt-12 relative overflow-hidden">
         {/* Decorative background blur */}
         <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-blue-50 rounded-none blur-3xl"></div>
         <div className="absolute -top-24 -right-24 w-64 h-64 bg-fuchsia-50 rounded-none blur-3xl"></div>
         
         <div className="relative z-10">
-          <div className="w-24 h-24 bg-white rounded-[2rem] flex items-center justify-center mx-auto mb-8 shadow-none border border-black border-b-2 border-white">
+          <div className="w-24 h-24 bg-white rounded-none flex items-center justify-center mx-auto mb-8 shadow-none border border-black border-b-2 border-white">
             <CalendarPlus className="w-12 h-12 text-black" />
           </div>
           <h2 className="text-3xl font-heading uppercase tracking-tight font-bold font-heading text-gray-900 mb-4 tracking-tight">Expand the Platform</h2>

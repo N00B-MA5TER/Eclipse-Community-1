@@ -10,8 +10,6 @@ export function MobileBottomNav() {
   const navItems = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutGrid },
     { name: "Teams", href: "/dashboard/teams", icon: Users },
-    { name: "Profile", href: "/dashboard/profile", icon: UserCircle },
-    { name: "Support", href: "/dashboard/support", icon: HelpCircle },
   ];
 
   return (

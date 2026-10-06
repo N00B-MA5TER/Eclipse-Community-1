@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Play, FileText } from "lucide-react";
 import { GalleryItem } from "@/lib/dummyGalleryData";
+import { Reveal } from "@/components/motion/Reveal";
 
 interface GalleryMasonryProps {
   items: GalleryItem[];
@@ -22,11 +22,11 @@ export function GalleryMasonry({ items, onItemClick }: GalleryMasonryProps) {
         {columns.map((columnItems, colIndex) => (
           <div key={colIndex} className="flex flex-col gap-6">
             {columnItems.map((item, index) => (
-              <motion.div
+              <Reveal
                 key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.05 }}
+                delay={index * 0.05}
+                distance={20}
+                duration={0.5}
                 className={`relative group rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 w-full
                   ${item.aspectRatio === 'portrait' ? 'aspect-[3/4]' : item.aspectRatio === 'video' ? 'aspect-video' : 'aspect-square'}`}
                 onClick={() => onItemClick(item)}
@@ -74,7 +74,7 @@ export function GalleryMasonry({ items, onItemClick }: GalleryMasonryProps) {
                   </span>
                   <h3 className="text-white font-bold text-lg leading-tight">{item.title}</h3>
                 </div>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
         ))}

@@ -15,13 +15,13 @@ export function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [desktopDropdown, setDesktopDropdown] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const router = useRouter();
 
   const searchData = [
     { title: "Home", href: "/", category: "General", description: "The landing page and general overview." },
     { title: "About Us", href: "/about", category: "General", description: "Learn about ECLIPSE club and what we do." },
-    { title: "Mission & Vision", href: "/mission", category: "Identity", description: "Our mission and vision: We don't prepare for the future. We build it." },
-    { title: "Achievements", href: "/achievements", category: "Showcase", description: "Successful events, workshops, and hackathons." },
+    { title: "Dashboard", href: "/dashboard", category: "App", description: "Admin/Member Dashboard" },
     { title: "Core Team", href: "/gallery/teams", category: "People", description: "Meet the passionate individuals behind ECLIPSE." },
     { title: "Faculty Members", href: "/gallery/faculty", category: "People", description: "Our guiding faculty and mentors." },
     { title: "Projects", href: "/gallery/projects", category: "Showcase", description: "Projects built by our members." },
@@ -43,6 +43,13 @@ export function Navbar() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  useEffect(() => {
+    const updateScrolled = () => setIsScrolled(window.scrollY > 28);
+    updateScrolled();
+    window.addEventListener("scroll", updateScrolled, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrolled);
+  }, [pathname]);
+
   const isActive = (path: string) => pathname === path || pathname.startsWith(path + '/');
 
   const NavLink = ({ href, children, exact = true }: { href: string; children: React.ReactNode; exact?: boolean }) => {
@@ -51,7 +58,8 @@ export function Navbar() {
     return (
       <Link 
         href={href} 
-        className={`px-3 py-2 rounded-full transition-colors text-sm font-semibold whitespace-nowrap ${
+        aria-current={active ? "page" : undefined}
+        className={`nav-item px-2.5 py-2 rounded-md transition-colors text-xs font-semibold whitespace-nowrap ${
           active 
             ? "bg-black text-white" 
             : "text-gray-700 hover:bg-gray-100 hover:text-black"
@@ -65,21 +73,19 @@ export function Navbar() {
   return (
     <>
       {/* Sticky Navbar Container */}
-      <header className="sticky top-0 z-50 w-full pt-6 pb-4 px-4 sm:px-8 flex items-center justify-between bg-[#fcfbf9] transition-all duration-300">
+      <header data-scrolled={isScrolled ? "true" : "false"} className="site-header sticky top-0 z-50 w-full py-3 px-5 sm:px-8 flex items-center justify-between bg-[#fcfbf9] transition-all duration-300">
         
         {/* LEFT: Logo Section (Separated from the pill) */}
         <div className="flex items-center shrink-0">
           <Link href="/" className="flex items-center justify-center transition-transform duration-300 hover:scale-105">
-            <img src="/logo.png" alt="Eclipse" className="h-[75px] md:h-[90px] w-auto object-contain scale-[1.2]" />
+            <img src="/logo.png" alt="Eclipse" className="h-16 md:h-20 w-auto object-contain" />
           </Link>
         </div>
 
         {/* MIDDLE: Navigation Links Pill */}
-        <nav className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center justify-center gap-1 px-4 h-12 md:h-14 bg-white border border-gray-200 shadow-xl rounded-full">
+        <nav aria-label="Main navigation" className="site-nav hidden xl:flex absolute left-1/2 -translate-x-1/2 items-center justify-center gap-0.5 px-2 h-11 bg-white border border-gray-200 shadow-sm rounded-lg">
           <NavLink href="/" exact={true}>Home</NavLink>
           <NavLink href="/about">About Us</NavLink>
-          <NavLink href="/mission">Mission & Vision</NavLink>
-          <NavLink href="/achievements">Achievements</NavLink>
           <NavLink href="/alumni">Alumni</NavLink>
           <NavLink href="/calendar">Calendar</NavLink>
 
@@ -91,7 +97,7 @@ export function Navbar() {
           >
             <button 
               type="button" 
-              className="inline-flex items-center px-3 py-2 rounded-full transition-colors text-sm font-semibold text-gray-700 hover:bg-gray-100 hover:text-black whitespace-nowrap"
+              className="nav-item inline-flex items-center px-2.5 py-2 rounded-md transition-colors text-xs font-semibold text-gray-700 hover:bg-gray-100 hover:text-black whitespace-nowrap"
             >
               <span>Gallery</span>
               <ChevronDown className={`w-4 h-4 ml-1 transition-transform ${desktopDropdown === 'gallery' ? 'rotate-180' : ''}`} />
@@ -99,7 +105,6 @@ export function Navbar() {
             {desktopDropdown === 'gallery' && (
               <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-48 z-50">
                 <div className="bg-white border border-gray-200 rounded-2xl py-2 shadow-xl">
-                  <Link href="/gallery" onClick={() => setDesktopDropdown(null)} className="block px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-black">Overview</Link>
                   <Link href="/gallery/events" onClick={() => setDesktopDropdown(null)} className="block px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-black">Events</Link>
                   <Link href="/gallery/teams" onClick={() => setDesktopDropdown(null)} className="block px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-black">Core Team</Link>
                   <Link href="/gallery/faculty" onClick={() => setDesktopDropdown(null)} className="block px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-black">Faculty Members</Link>
@@ -116,7 +121,7 @@ export function Navbar() {
           >
             <button 
               type="button" 
-              className="inline-flex items-center px-3 py-2 rounded-full transition-colors text-sm font-semibold text-gray-700 hover:bg-gray-100 hover:text-black whitespace-nowrap"
+              className="nav-item inline-flex items-center px-2.5 py-2 rounded-md transition-colors text-xs font-semibold text-gray-700 hover:bg-gray-100 hover:text-black whitespace-nowrap"
             >
               <span>Contact</span>
               <ChevronDown className={`w-4 h-4 ml-1 transition-transform ${desktopDropdown === 'contact' ? 'rotate-180' : ''}`} />
@@ -137,40 +142,57 @@ export function Navbar() {
           <button 
             aria-label="Search" 
             onClick={() => setIsSearchOpen(true)}
-            className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full text-gray-700 hover:bg-gray-100 hover:text-black transition-colors shrink-0"
+            className="w-10 h-10 flex items-center justify-center rounded-md text-gray-700 hover:bg-gray-100 hover:text-black transition-colors shrink-0"
           >
             <Search className="w-5 h-5 md:w-6 md:h-6" />
           </button>
           
           {!loading && user ? (
-            <div className="hidden sm:flex items-center gap-2 bg-gray-100 rounded-[2rem] p-1">
+            <div className="nav-account-actions hidden sm:flex items-center gap-2">
+              <Link 
+                href="/profile"
+                className="nav-profile-button"
+                title="Profile"
+              >
+                <User className="w-4 h-4 md:w-5 md:h-5" />
+              </Link>
               <Link 
                 href="/dashboard"
-                className="bg-black text-white text-xs md:text-sm font-bold px-6 h-10 md:h-12 rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors shadow-md"
+                className="nav-dashboard-link"
               >
                 Dashboard
               </Link>
               <button
                 onClick={() => logout().then(() => router.push("/"))}
-                className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors shadow-sm"
-                title="Logout"
+                className="nav-signout-button"
+                type="button"
+                aria-label="Sign out"
+                title="Sign out"
               >
                 <LogOut className="w-4 h-4 md:w-5 md:h-5" />
               </button>
             </div>
           ) : !loading ? (
-            <Link 
-              href="/login"
-              className="hidden sm:flex bg-black text-white text-xs md:text-sm font-bold px-6 h-10 md:h-12 rounded-[2rem] items-center justify-center hover:bg-gray-800 transition-colors shadow-md"
-            >
-              Login
-            </Link>
+            <div className="hidden sm:flex items-center gap-2">
+              <Link 
+                href="/login"
+                className="bg-[#f5f4ef] text-black text-xs font-semibold px-4 h-10 rounded-md flex items-center justify-center hover:bg-gray-200 transition-colors shadow-sm"
+              >
+                Login
+              </Link>
+              <Link 
+                href="/register"
+                className="bg-black text-white text-xs font-semibold px-4 h-10 rounded-md flex items-center justify-center hover:bg-gray-800 transition-colors shadow-sm"
+              >
+                Register
+              </Link>
+            </div>
           ) : null}
 
           <button 
             aria-label="Toggle Menu" 
             onClick={() => setIsMobileMenuOpen(true)}
-            className="lg:hidden w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-black text-white hover:bg-gray-800 transition-colors shrink-0"
+            className="xl:hidden w-10 h-10 flex items-center justify-center rounded-md bg-black text-white hover:bg-gray-800 transition-colors shrink-0"
           >
             <Menu className="w-5 h-5" />
           </button>
@@ -260,7 +282,7 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-[#fcfbf9] lg:hidden flex flex-col"
+            className="fixed inset-0 z-[100] bg-[#fcfbf9] xl:hidden flex flex-col"
           >
             <div className="flex items-center justify-between p-4 border-b-2 border-[#0c111d] bg-[#fcfbf9]">
               <Link href="/" className="flex items-center group">
@@ -278,15 +300,12 @@ export function Navbar() {
               {[
                 { href: "/", label: "Home" },
                 { href: "/about", label: "About Us" },
-                { href: "/mission", label: "Mission & Vision" },
-                { href: "/achievements", label: "Achievements" },
                 { href: "/alumni", label: "Alumni" },
                 { href: "/calendar", label: "Calendar" },
 
                 { 
                   label: "Gallery", 
                   subItems: [
-                    { href: "/gallery", label: "Overview" },
                     { href: "/gallery/teams", label: "Core Team" },
                     { href: "/gallery/faculty", label: "Faculty Members" },
                     { href: "/gallery/projects", label: "Projects" },
@@ -352,14 +371,21 @@ export function Navbar() {
               ))}
             </div>
 
-            <div className="p-6 border-t-2 border-[#0c111d] bg-[#f5f4ef]">
-              <Link 
-                href={user ? "/dashboard" : "/login"}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full flex items-center justify-center text-sm font-mono-code font-bold uppercase tracking-wider px-6 py-4 border border-[#0c111d] bg-[#0c111d] text-[#fcfbf9] hover:bg-[#0045cc] transition-colors"
-              >
-                {user ? "Go to Dashboard" : "Login to Portal"}
-              </Link>
+            <div className={`mobile-account-actions${user ? " is-authenticated" : ""}`}>
+              {user ? (
+                <>
+                  <Link href="/profile" onClick={() => setIsMobileMenuOpen(false)} className="mobile-dashboard-link">Profile</Link>
+                  <Link href="/dashboard" onClick={() => setIsMobileMenuOpen(false)} className="mobile-dashboard-link">Dashboard</Link>
+                  <button type="button" className="mobile-signout-button col-span-2" onClick={() => logout().then(() => { setIsMobileMenuOpen(false); router.push("/"); })}>
+                    <LogOut className="h-4 w-4" /> Sign out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="mobile-dashboard-link">Login to Portal</Link>
+                  <Link href="/register" onClick={() => setIsMobileMenuOpen(false)} className="mobile-dashboard-link">Register</Link>
+                </>
+              )}
             </div>
           </motion.div>
         )}

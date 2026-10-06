@@ -64,13 +64,13 @@ export default function ManageEventsPage() {
           <h1 className="text-[2rem] font-bold font-heading text-gray-900 tracking-tight">Manage Events</h1>
           <p className="text-neutral-600 font-mono text-xs uppercase tracking-wider mt-1 font-medium text-[15px]">View, edit, or delete published workshops and hackathons.</p>
         </div>
-        <Link href="/admin/events/new" className="inline-flex items-center gap-2 bg-black text-white hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-none transition-all hover:scale-105 shadow-none border border-black shadow-none border border-black-600/20 active:scale-95">
-          <CalendarPlus className="w-5 h-5" />
+        <Link href="/admin/events/new" className="inline-flex items-center gap-2 bg-black hover:bg-black text-white font-mono text-xs uppercase tracking-wider font-bold px-6 py-3 rounded-none border border-black shadow-[3px_3px_0px_0px_#f59e0b] hover:shadow-none transition-smooth active:scale-95">
+          <CalendarPlus className="w-5 h-5 text-[#f59e0b]" />
           Create New Event
         </Link>
       </div>
 
-      <div className="bg-white rounded-[2rem] shadow-none border border-black border border-black overflow-hidden relative">
+      <div className="bg-white rounded-none border border-black overflow-hidden relative">
         
         {/* Table Toolbar */}
         <div className="p-6 border-b border-black flex items-center justify-between bg-white/50 ">

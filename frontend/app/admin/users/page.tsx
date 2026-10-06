@@ -64,7 +64,7 @@ export default function AdminUsersPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-[2rem] border border-black shadow-none border border-black p-6 mb-8">
+      <div className="bg-white rounded-none border border-black shadow-none border border-black p-6 mb-8">
         <div className="relative max-w-md">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           <input 
@@ -78,7 +78,7 @@ export default function AdminUsersPage() {
       </div>
 
       {filteredUsers.length === 0 ? (
-        <div className="bg-white rounded-[2rem] border border-dashed border-black p-12 text-center shadow-none border border-black">
+        <div className="bg-white rounded-none border border-dashed border-black p-12 text-center shadow-none border border-black">
           <div className="w-16 h-16 bg-white rounded-none flex items-center justify-center mx-auto mb-4">
             <Users className="w-8 h-8 text-gray-400" />
           </div>
@@ -86,7 +86,7 @@ export default function AdminUsersPage() {
           <p className="text-neutral-600 font-mono text-xs uppercase tracking-wider">There are no users matching your search criteria.</p>
         </div>
       ) : (
-        <div className="bg-white rounded-[2rem] border border-black shadow-none border border-black overflow-hidden">
+        <div className="bg-white rounded-none border border-black shadow-none border border-black overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead className="bg-white border-b border-black text-neutral-600 font-mono text-xs uppercase tracking-wider uppercase tracking-wider text-[11px] font-bold">
@@ -165,7 +165,7 @@ export default function AdminUsersPage() {
       {/* Profile Modal */}
       {mounted && selectedUser && typeof document !== 'undefined' && createPortal(
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-gray-900/60 animate-in fade-in" style={{ position: 'fixed' }}>
-          <div className="bg-white rounded-[2rem] w-full max-w-2xl shadow-2xl border border-black overflow-hidden flex flex-col max-h-[90vh] relative z-[10000]">
+          <div className="bg-white rounded-none w-full max-w-2xl shadow-2xl border border-black overflow-hidden flex flex-col max-h-[90vh] relative z-[10000]">
             
             <div className="p-6 border-b border-black relative flex-shrink-0 flex items-center justify-between">
               <h2 className="text-xl font-bold text-gray-900">User Profile</h2>

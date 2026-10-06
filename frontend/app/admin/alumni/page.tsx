@@ -166,7 +166,7 @@ export default function AdminAlumniPage() {
       </div>
 
       {filteredAlumni.length === 0 ? (
-        <div className="bg-white rounded-[2rem] border border-dashed border-black p-12 text-center shadow-none">
+        <div className="bg-white rounded-none border border-dashed border-black p-12 text-center shadow-none">
           <div className="w-16 h-16 bg-white border-2 border-black rounded-none flex items-center justify-center mx-auto mb-4">
             <Check className="w-8 h-8 text-[#f59e0b]" />
           </div>

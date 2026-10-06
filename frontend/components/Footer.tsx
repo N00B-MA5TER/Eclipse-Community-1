@@ -30,9 +30,7 @@ export function Footer() {
             <ul className="space-y-2">
               <li><Link className="hover:underline" href="/">01. Home Overview</Link></li>
               <li><Link className="hover:underline" href="/about">02. About Us &amp; Identity</Link></li>
-              <li><Link className="hover:underline" href="/mission">03. Mission &amp; Vision</Link></li>
-              <li><Link className="hover:underline" href="/achievements">04. Event Archives</Link></li>
-              <li><Link className="hover:underline" href="/gallery">05. Visual Media Gallery</Link></li>
+              <li><Link className="hover:underline" href="/gallery">03. Visual Media Gallery</Link></li>
             </ul>
           </div>
           
@@ -44,25 +42,12 @@ export function Footer() {
             <div className="space-y-2 text-[#434656]">
               <p>DESIGN &amp; ARCHITECT BY:</p>
               <p className="font-bold text-[#0c111d]">Shubhsanket Sharma</p>
-              <p className="pt-2">DEPLOY BY:</p>
+              <p className="pt-2">DEPLOYED BY:</p>
               <p className="font-bold text-[#0c111d]">Rajdeep Nandy &amp; Debjit Chowdhury</p>
               <p className="text-[11px] text-[#737688] pt-2">TYPES: Playfair Display / Plus Jakarta Sans / Space Grotesk / Bodoni Moda</p>
             </div>
           </div>
           
-          {/* Connect / System Status */}
-          <div className="md:col-span-2 font-mono-code text-xs">
-            <p className="font-bold text-[#0c111d] uppercase tracking-wider mb-4 border-b border-[#0c111d]/20 pb-1">
-              // STATUS
-            </p>
-            <div className="bg-[#ffffff] border border-[#0c111d] p-3 text-[11px]">
-              <div className="flex items-center gap-1.5 text-[#b45309] font-bold">
-                <span className="w-2 h-2 rounded-full bg-[#b45309] animate-pulse"></span>
-                <span>RECRUITMENT ACTIVE</span>
-              </div>
-              <p className="text-[#737688] mt-1 text-[10px]">SLOTS: 28 REMAINING</p>
-            </div>
-          </div>
         </div>
         
         {/* Bottom Hairline Copyright Bar */}
@@ -71,14 +56,35 @@ export function Footer() {
             © 2026 ECLLIPSE TECH COMMUNITY // DIATM. ALL RIGHTS RESERVED.
           </div>
           <div className="flex items-center gap-4">
-            <Link className="hover:text-[#0c111d]" href="/constitution">CONSTITUTION</Link>
-            <span>•</span>
-            <Link className="hover:text-[#0c111d]" href="/conduct">CODE OF CONDUCT</Link>
-            <span>•</span>
             <a className="hover:text-[#0c111d]" href="https://github.com/designershubh1208-pixel" target="_blank" rel="noreferrer">GITHUB</a>
           </div>
         </div>
-      </div>
+        </div>
+
+        {/* BIG 3D ECLIPSE TEXT */}
+        <div className="mt-16 sm:mt-24 w-full flex justify-center overflow-hidden pb-4">
+          <h1 
+            className="font-serif-display font-black text-[#0c111d] leading-none tracking-tighter select-none"
+            style={{ 
+              fontSize: 'clamp(5rem, 18vw, 25rem)',
+              textShadow: `
+                1px 1px 0px #303443,
+                2px 2px 0px #303443,
+                3px 3px 0px #303443,
+                4px 4px 0px #303443,
+                5px 5px 0px #303443,
+                6px 6px 0px #303443,
+                7px 7px 0px #303443,
+                8px 8px 0px #303443,
+                9px 9px 0px #303443,
+                10px 10px 0px #303443,
+                11px 11px 15px rgba(0,0,0,0.3)
+              `
+            }}
+          >
+            ECLIPSE
+          </h1>
+        </div>
     </footer>
   );
 }

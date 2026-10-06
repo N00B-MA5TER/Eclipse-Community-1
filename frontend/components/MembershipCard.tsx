@@ -38,8 +38,8 @@ export function MembershipCard({ member, animateEntrance = false }: MembershipCa
     const y = e.clientY - rect.top - rect.height / 2;
     
     // Calculate rotation limits (subtle 3D effect)
-    const rotateX = -(y / rect.height) * 15;
-    const rotateY = (x / rect.width) * 15;
+    const rotateX = -(y / rect.height) * 3;
+    const rotateY = (x / rect.width) * 3;
     
     card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
   };
@@ -61,66 +61,17 @@ export function MembershipCard({ member, animateEntrance = false }: MembershipCa
           transformStyle: "preserve-3d"
         }}
       >
-        {/* Abstract Background Waves */}
-        <div className="card-wave-bg">
-          <div className="wave-line"></div>
-          <div className="wave-line"></div>
-          <div className="wave-line"></div>
-          <div className="wave-line"></div>
-          <div className="wave-line"></div>
-        </div>
 
-        {/* Branding Header */}
-        <div className="card-header">
-          <div className="card-logo-placeholder">
-            <img src="/icon.png" alt="Eclipse" className="card-logo-img" onError={(e) => {
-              (e.target as HTMLImageElement).style.display = 'none';
-              if (e.target && (e.target as any).parentNode) {
-                ((e.target as any).parentNode as HTMLDivElement).innerText = 'E';
-              }
-            }} />
-          </div>
-          <div className="card-brand-text">
-            <div className="brand-eclipse">ECLIPSE</div>
-            <div className="brand-tech">TECH COMMUNITY</div>
-          </div>
-        </div>
 
-        {/* Decorative elements */}
-        <div className="decorative-x-group">
-          <div className="decorative-x">X</div>
-          <div className="decorative-x">X</div>
-          <div className="decorative-x">X</div>
-        </div>
-        <div className="decorative-square"></div>
 
-        {/* Profile Photo Area */}
-        <div className="profile-photo-container">
-          {member.profilePhoto ? (
-            <img 
-              src={member.profilePhoto} 
-              alt={member.name} 
-              className="profile-photo"
-              referrerPolicy="no-referrer"
-            />
-          ) : (
-            <div className="profile-placeholder">
-              {member.name ? member.name.charAt(0).toUpperCase() : 'E'}
-            </div>
-          )}
-        </div>
 
         {/* Member Information */}
         <div className="member-info-section">
-          <div className="member-label">{member.membershipType || "MEMBER"}</div>
           <div className="member-name">{member.name || "ECLIPSE MEMBER"}</div>
-          <div className="member-id">ID No. : {member.memberId || "PENDING"}</div>
+          <div className="member-id">Id No.: {member.memberId || "PENDING"}</div>
         </div>
 
-        {/* Footer URL */}
-        <div className="card-footer">
-          <div className="website-url">www.csediatm.in</div>
-        </div>
+
       </div>
     </div>
   );

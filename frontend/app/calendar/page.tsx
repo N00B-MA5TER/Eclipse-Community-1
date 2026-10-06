@@ -147,8 +147,9 @@ export default function CalendarPage() {
               {/* Days of week header */}
               <div className="grid grid-cols-7 border-b-4 border-[#0c111d] bg-[#f5f4ef]">
                 {DAYS_OF_WEEK.map(day => (
-                  <div key={day} className="py-4 text-center font-mono-code font-black uppercase tracking-widest text-xs md:text-sm border-r-4 border-[#0c111d] last:border-r-0">
-                    {day}
+                  <div key={day} className="py-3 sm:py-4 text-center font-mono-code font-black uppercase tracking-[0.04em] sm:tracking-widest text-[10px] sm:text-xs md:text-sm border-r-4 border-[#0c111d] last:border-r-0">
+                    <span className="sm:hidden">{day.slice(0, 1)}</span>
+                    <span className="hidden sm:inline">{day}</span>
                   </div>
                 ))}
               </div>
@@ -164,7 +165,7 @@ export default function CalendarPage() {
                       key={i} 
                       onClick={() => date && setSelectedDate(date)}
                       className={`
-                        min-h-[120px] md:min-h-[160px] border-r-4 border-b-4 border-[#0c111d] p-1.5 md:p-2 transition-colors
+                        min-h-[88px] sm:min-h-[120px] md:min-h-[160px] border-r-4 border-b-4 border-[#0c111d] p-1 sm:p-1.5 md:p-2 transition-colors
                         ${(i + 1) % 7 === 0 ? 'border-r-0' : ''}
                         ${!date ? 'bg-[#fcfbf9]/50' : 'bg-white hover:bg-[#f5f4ef] cursor-pointer'}
                         ${isToday ? 'bg-[#f59e0b]/10' : ''}
@@ -173,7 +174,7 @@ export default function CalendarPage() {
                       {date && (
                         <div className="h-full flex flex-col">
                           <div className="flex justify-between items-start mb-2">
-                            <span className={`font-mono-code font-bold text-base md:text-lg ${isToday ? 'bg-[#f59e0b] text-[#0c111d] px-2 py-0.5 border-2 border-[#0c111d]' : 'text-[#0c111d]'}`}>
+                            <span className={`font-mono-code font-bold text-sm sm:text-base md:text-lg ${isToday ? 'bg-[#f59e0b] text-[#0c111d] px-1 sm:px-2 py-0.5 border-2 border-[#0c111d]' : 'text-[#0c111d]'}`}>
                               {date.getDate()}
                             </span>
                           </div>

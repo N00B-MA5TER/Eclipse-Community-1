@@ -186,7 +186,7 @@ export default function AllTeamsPage() {
           <h1 className="text-3xl font-heading uppercase tracking-tight font-heading font-bold text-gray-900 mb-2">All Teams</h1>
           <p className="text-neutral-600 font-mono text-xs uppercase tracking-wider text-[14px]">Discover and join hackathon squads and workshop groups.</p>
         </div>
-        <Link href="/dashboard" className="inline-flex items-center gap-2 bg-black text-white hover:bg-blue-700 text-white font-bold py-2.5 px-5 rounded-none transition-all shadow-none border border-black shadow-none border border-black-600/20 text-[14px]">
+        <Link href="/dashboard" className="inline-flex items-center gap-2 bg-[#0f172a] hover:bg-black text-white font-bold py-2.5 px-5 rounded-none transition-all shadow-none border border-black text-[14px]">
           <Plus className="w-4 h-4" />
           Join New Event
         </Link>

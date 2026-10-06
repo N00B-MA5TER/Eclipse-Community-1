@@ -19,7 +19,6 @@ export function Sidebar() {
   const navigation = [
     { name: "Dashboard", href: "/dashboard", icon: Layout },
     { name: "All Teams", href: "/dashboard/teams", icon: Users, badge: "01" },
-    { name: "Profile", href: "/dashboard/profile", icon: User },
   ];
 
   return (
@@ -68,16 +67,8 @@ export function Sidebar() {
         </nav>
       </div>
 
-      {/* Bottom Section: Support & Logout */}
+      {/* Bottom Section: Logout */}
       <div className="p-4 border-t border-black space-y-1 bg-white">
-        <Link href="/dashboard/support" className="flex items-center justify-between px-3.5 py-2.5 rounded-none text-neutral-700 hover:text-black hover:bg-neutral-100 font-mono text-xs uppercase tracking-wider font-medium border border-transparent hover:border-neutral-300 transition-smooth group">
-          <div className="flex items-center gap-3">
-            <HelpCircle className="w-4 h-4 text-neutral-500 group-hover:text-black" />
-            <span>Help & Support</span>
-          </div>
-          <span className="px-1.5 py-0.5 rounded-none text-[10px] font-mono font-bold bg-[#f59e0b]/20 text-black border border-[#f59e0b]">8</span>
-        </Link>
-
         <button onClick={logout} className="w-full flex items-center justify-between px-3.5 py-2 rounded-none text-neutral-500 hover:text-black hover:bg-neutral-100 font-mono text-xs uppercase tracking-wider font-medium border border-transparent hover:border-black transition-smooth group" type="button">
           <div className="flex items-center gap-3">
             <LogOut className="w-4 h-4 text-neutral-400 group-hover:text-black" />

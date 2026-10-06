@@ -2,496 +2,173 @@
 
 import Link from "next/link";
 import { useAuth } from "@/lib/firebase/auth";
-import { useEffect } from "react";
-import Lenis from "lenis";
+import { useRef, useState } from "react";
+import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { ArrowDown, ArrowRight, ArrowUpRight, Compass, MoveUpRight } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-export default function Home() {
-  const { user, loading } = useAuth();
+const storyBeats = [
+  { label: "01 / START SOMEWHERE", lineOne: "Bring the rough", lineTwo: "draft.", description: "Ideas are welcome before they’re polished. Curiosity is enough to get started." },
+  { label: "02 / MAKE IT REAL", lineOne: "Build something", lineTwo: "you can test.", description: "Pair up, try a tool, and make a first version. Learning gets clearer when there’s something real to explore." },
+  { label: "03 / SHARE THE WORK", lineOne: "Let the work", lineTwo: "teach you.", description: "Show what worked and what didn’t. Each attempt gives the next one a better starting point." },
+  { label: "04 / OPEN THE DOOR", lineOne: "Leave a way", lineTwo: "in.", description: "Document what you learned, invite someone along, and make the next build easier to begin." },
+  { label: "05 / KEEP IT MOVING", lineOne: "Good work", lineTwo: "travels.", description: "Projects become starting points for other people. That’s how a student community gets stronger." },
+];
 
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
-    });
+function EclipseScrollStory({ reduceMotion }: { reduceMotion: boolean | null }) {
+  const storyRef = useRef<HTMLElement>(null);
+  const [storyStep, setStoryStep] = useState(0);
+  const { scrollYProgress } = useScroll({ target: storyRef, offset: ["start start", "end end"] });
+  const storyBackground = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], ["#0b0a09", "#15100d", "#29190f", "#21140f", "#110d0b", "#0b0a09"]);
+  useMotionValueEvent(scrollYProgress, "change", (latest) => setStoryStep(Math.min(storyBeats.length - 1, Math.floor(latest * storyBeats.length))));
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-    return () => lenis.destroy();
-  }, []);
+  if (reduceMotion) return (
+    <section className="bg-[#0b0a09] px-6 py-24 text-white sm:px-10 sm:py-32" aria-label="ECLIPSE community story">
+      <div className="mx-auto max-w-[1120px]">
+        <p className="font-mono-code text-[10px] uppercase tracking-[.2em] text-[#ffb36c]">A story of making, together</p>
+        <h2 className="mt-5 max-w-4xl font-heading text-5xl font-medium leading-[.98] tracking-[-.06em] sm:text-7xl">{storyBeats[2].lineOne}<br /><span className="text-[#ffb36c]">{storyBeats[2].lineTwo}</span></h2>
+        <p className="mt-5 max-w-xl text-base leading-7 text-white/70">{storyBeats[2].description}</p>
+        <ol className="mt-16 grid gap-6 border-t border-white/15 pt-6 sm:grid-cols-2 lg:grid-cols-5">{storyBeats.map((beat) => <li key={beat.label}><span className="font-mono-code text-[9px] uppercase tracking-[.14em] text-white/45">{beat.label}</span><p className="mt-2 text-sm text-white/75">{beat.lineOne} {beat.lineTwo}</p></li>)}</ol>
+      </div>
+    </section>
+  );
 
   return (
-    <div className="min-h-screen bg-[#fcfbf9] text-[#0c111d] font-body-lg antialiased selection:bg-[#f59e0b] selection:text-[#0c111d] relative">
+    <section ref={storyRef} className="relative h-[500svh] bg-[#0b0a09]" aria-label="Scroll through the ECLIPSE community story">
+      <motion.div className="sticky top-0 flex h-svh min-h-[600px] items-center overflow-hidden text-white" style={{ backgroundColor: storyBackground }}>
+        <motion.div className="absolute inset-x-0 top-0 h-px origin-left bg-[#ffad63] shadow-[0_0_12px_rgba(255,173,99,.65)]" style={{ scaleX: scrollYProgress }} aria-hidden="true" />
+        <div className="mx-auto flex w-full max-w-[1440px] flex-col justify-center px-6 sm:px-10 lg:px-16">
+          <div className="mb-7 flex items-center justify-between gap-4 font-mono-code text-[9px] uppercase tracking-[.18em] text-white/45 sm:text-[10px]"><span>A story of making, together</span><span>{String(storyStep + 1).padStart(2, "0")} <i className="px-1 not-italic text-white/25">/</i> 05</span></div>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div key={storyStep} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -18 }} transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }} aria-live="polite">
+              <p className="font-mono-code text-[10px] uppercase tracking-[.2em] text-[#ffb36c]">{storyBeats[storyStep].label}</p>
+              <h2 className="mt-6 max-w-5xl font-heading text-[clamp(3.1rem,9vw,8.5rem)] font-medium leading-[.92] tracking-[-.07em] sm:mt-8"><span className="block">{storyBeats[storyStep].lineOne}</span><span className="block text-[#ffb36c]">{storyBeats[storyStep].lineTwo}</span></h2>
+              <p className="mt-7 max-w-xl text-base leading-7 text-white/65 sm:mt-9 sm:text-lg sm:leading-8">{storyBeats[storyStep].description}</p>
+            </motion.div>
+          </AnimatePresence>
+          <div className="mt-16 h-px w-full bg-white/10 sm:mt-20"><motion.div className="h-full origin-left bg-[#ffad63]" style={{ scaleX: scrollYProgress }} /></div>
+          <p className="mt-4 font-mono-code text-[9px] uppercase tracking-[.16em] text-white/40">Keep scrolling to follow the story <ArrowDown className="ml-2 inline" size={12} /></p>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
+export default function Home() {
+  const { user } = useAuth();
+  const reduceMotion = useReducedMotion();
+  return (
+    <div className="home-experience min-h-screen bg-[#fff8f2] text-[#32231d] antialiased selection:bg-[#ffb36c] selection:text-[#32231d]">
       <Navbar />
-      
-      <main className="max-w-[1440px] mx-auto px-4 sm:px-8 py-8 lg:py-12">
-        {/* VARIANT 3 HERO: CLASSIC NEWSPAPER MASTHEAD FORMAT */}
-        <div className="border-b-2 border-[#0c111d] pb-8 mb-10 text-center">
-          {/* Top Subhead Wire & Tag Pill */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#0c111d]/20 pb-3 mb-6 font-mono-code text-[11px] text-[#434656]">
-            <div className="inline-flex items-center gap-2 bg-[#0c111d] text-[#fcfbf9] px-3.5 py-1 rounded-full font-bold tracking-widest uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#f59e0b] inline-block animate-ping"></span>
-              <span>• OFFICIAL TECH COMMUNITY OF DIATM</span>
+      <>
+        <section className="zero-hero relative isolate min-h-svh overflow-hidden bg-[#0b0a09] text-white" aria-labelledby="hero-title">
+          <div className="zero-water" aria-hidden="true" /><div className="zero-grain" aria-hidden="true" />
+          <div className="relative z-10 mx-auto flex min-h-svh max-w-[1600px] flex-col justify-between px-5 pb-6 pt-28 sm:px-10 sm:pb-9 sm:pt-32 lg:px-16">
+            <div className="flex items-start justify-between gap-4 font-mono-code text-[10px] font-medium uppercase tracking-[.2em] text-white/75 sm:text-xs"><div className="flex items-center gap-3"><span className="h-2 w-2 rounded-full bg-[#ffb36c] shadow-[0_0_14px_#ffb36c]" /> DIATM · STUDENT BUILDER COMMUNITY</div><div className="hidden text-right sm:block">DURGAPUR, INDIA <span className="mx-2 text-white/35">/</span> SINCE 2022</div></div>
+            <div className="grid items-end gap-8 pb-10 pt-16 md:grid-cols-[minmax(0,1fr)_minmax(220px,310px)] md:pb-12 lg:gap-16">
+              <motion.div initial={reduceMotion ? false : { opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : .8, ease: [0.22, 1, .36, 1] }}>
+                <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[.04] px-3.5 py-2 font-mono-code text-[9px] uppercase tracking-[.16em] text-white/75 sm:text-[10px]"><Compass size={13} className="text-[#ffb36c]" /> A place to find your next thing</p>
+                <h1 id="hero-title" className="max-w-5xl font-heading text-[clamp(3.7rem,10vw,9.5rem)] font-semibold leading-[.83] tracking-[-.085em]">Make room<br /><span className="text-[#ffb36c]">for what’s</span><br />possible.</h1>
+                <p className="mt-7 max-w-2xl text-base leading-7 text-white/70 sm:mt-9 sm:text-lg sm:leading-8">ECLIPSE is where curious students learn by making, turn rough ideas into real projects, and find people to build the next thing with.</p>
+                <p className="mt-5 font-heading text-sm font-semibold tracking-[.08em] text-white sm:text-base">LEARN. BUILD. BREAK. REPEAT.</p>
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <Link href="/events/point-break/register" className="group inline-flex min-h-12 items-center gap-3 rounded-full bg-[#f59e0b] px-6 text-sm font-bold text-[#0c111d] transition-transform hover:-translate-y-0.5 ring-2 ring-offset-2 ring-offset-[#0b0a09] ring-[#f59e0b] shadow-[0_0_20px_rgba(245,158,11,0.5)]">🔥 POINT BREAK REGISTRATION <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></Link>
+                  <Link href={user ? "/dashboard" : "/register"} className="group inline-flex min-h-12 items-center gap-3 rounded-full bg-[#ffb36c] px-6 text-sm font-semibold text-[#2c1c13] transition-transform hover:-translate-y-0.5">Find your people <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></Link>
+                  <Link href="/projects" className="group inline-flex min-h-12 items-center gap-3 rounded-full border border-white/30 px-6 text-sm font-semibold text-white transition-colors hover:border-white/70 hover:bg-white/[.06]">See what we make <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></Link>
+                </div>
+              </motion.div>
+              <motion.div className="hidden justify-self-end text-right md:block" initial={reduceMotion ? false : { opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : .7, delay: reduceMotion ? 0 : .2 }}><p className="font-mono-code text-[9px] uppercase tracking-[.19em] text-white/40">A community in motion</p><p className="mt-3 font-heading text-lg font-medium text-white/85">Ideas become things<br />worth sharing.</p><Link href="/about" className="mt-5 inline-flex items-center gap-2 font-mono-code text-[9px] uppercase tracking-[.15em] text-[#ffb36c] hover:text-white">Discover ECLIPSE <MoveUpRight size={13} /></Link></motion.div>
             </div>
-            <div className="font-bold tracking-wider text-[#0c111d]">
-              COLLEGIATE ARCHITECTURAL EDITION
-            </div>
-            <div className="text-[#737688]">
-              RELEASE CODENAME: BROAD-MONO-07
-            </div>
+            <div className="flex items-center justify-between border-t border-white/20 pt-4 font-mono-code text-[9px] uppercase tracking-[.15em] text-white/50"><span>There’s more beneath the surface</span><span className="inline-flex items-center gap-2">Scroll to explore <ArrowDown size={13} /></span></div>
           </div>
-          
-          {/* Full-Width Massive Centered Headline */}
-          <div className="py-4">
-            <h1 className="font-serif-display text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-[-0.04em] leading-[0.95] text-[#0c111d] uppercase">
-              Outshine the Ordinary.
-            </h1>
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
-              <span className="font-sans font-black text-2xl sm:text-4xl md:text-5xl tracking-[-0.02em] uppercase text-[#0c111d]">
-                LEARN. BUILD. BREAK. REPEAT
-              </span>
-              <span className="bg-[#f59e0b] text-[#451a03] border border-[#b45309] px-3 py-1 text-[11px] font-mono-code font-bold uppercase tracking-wider">
-                TECH INITIATIVE
-              </span>
-            </div>
-          </div>
-          
-          {/* Masthead Lower Hairline Rule */}
-          <div className="border-t border-[#0c111d] pt-3 mt-4 flex flex-wrap items-center justify-between text-[11px] font-mono-code text-[#434656]">
-            <span className="font-bold text-[#0c111d]">DEPARTMENT OF COMPUTER SCIENCE &amp; ENGINEERING</span>
-            <span>COLLEGIATE BROADSHEET JOURNAL — ISSUE NO. 26</span>
-            <span className="text-[#737688]">AUTUMN TERM 2026</span>
-          </div>
-        </div>
-
-        {/* BALANCED 3-COLUMN HERO LAYOUT */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 pb-16 border-b-2 border-[#0c111d]">
-          {/* LEFT COLUMN: Club Overview & CTAs */}
-          <div className="lg:col-span-4 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-[#0c111d] pb-8 lg:pb-0 lg:pr-8">
-            <div>
-              <div className="flex items-center gap-2 border-b border-[#0c111d] pb-2 mb-4 font-mono-code text-[11px]">
-                <span className="w-2 h-2 bg-[#0c111d]"></span>
-                <span className="font-bold tracking-wider text-[#0c111d]">■ COLUMN 01 // OVERVIEW</span>
-              </div>
-              <div className="border-l-4 border-[#0c111d] pl-4 py-1 mb-6">
-                <p className="font-body-lg text-base sm:text-lg text-[#0c111d] leading-relaxed font-normal">
-                  Ecllipse is the official Tech Community of our college. Join a vibrant community of passionate developers and creators to host workshops, collaborate on epic projects, and push the boundaries of technology.
-                </p>
-                <p className="mt-4 text-xs text-[#434656] font-mono-code">
-                  // INCUBATING OPEN-SOURCE, SYSTEMS PROGRAMMING &amp; EXPERIMENTAL INTERACTION DESIGN.
-                </p>
-              </div>
-            </div>
-            <div className="space-y-4 pt-4 border-t border-[#0c111d]/20">
-              <div className="flex flex-wrap items-center gap-3">
-                <Link 
-                  className="h-12 px-6 bg-[#0c111d] text-[#fcfbf9] font-mono-code text-xs font-bold uppercase tracking-wider flex items-center justify-center hover:bg-[#f59e0b] hover:text-[#0c111d] transition-colors shadow-[3px_3px_0px_0px_#0c111d] border border-[#0c111d]" 
-                  href={user ? "/dashboard" : "/register"}
-                >
-                  GET STARTED
-                </Link>
-                <Link
-                  aria-label="Explore action" 
-                  className="w-12 h-12 border border-[#0c111d] bg-[#ffffff] flex items-center justify-center hover:bg-[#0c111d] hover:text-[#fcfbf9] transition-colors" 
-                  href="/about"
-                >
-                  <span className="material-symbols-outlined text-lg">north_east</span>
-                </Link>
-              </div>
-              <Link className="inline-flex items-center gap-2 font-mono-code text-xs uppercase font-bold tracking-wider text-[#0c111d] hover:underline underline-offset-4 pt-2" href="/gallery/events">
-                <span className="w-2 h-2 rounded-full bg-[#ba1a1a]"></span>
-                <span>Watch club highlights</span>
-              </Link>
-            </div>
-          </div>
-
-          {/* CENTER COLUMN: Program Snapshot Card */}
-          <div className="lg:col-span-5 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-[#0c111d] pb-8 lg:pb-0 lg:pr-8">
-            <div className="relative border-2 border-[#0c111d] bg-[#ffffff] p-6 bracket-corner-tl bracket-corner-br shadow-[4px_4px_0px_0px_#0c111d]">
-              {/* Card Header Telemetry */}
-              <div className="flex items-center justify-between border-b border-[#0c111d] pb-3 mb-5 font-mono-code text-[11px]">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-[#0c111d]"></span>
-                  <span className="font-bold tracking-wider text-[#0c111d]">■ PROGRAM SNAPSHOT</span>
-                </div>
-                <span className="text-[#737688] font-semibold">DIATM.DEV // 2026</span>
-              </div>
-              
-              {/* Event Headline & Visual Token */}
-              <div className="flex items-start gap-4 mb-4">
-                <div className="w-12 h-12 bg-[#0c111d] text-[#f59e0b] flex items-center justify-center font-mono-code font-black text-xl shrink-0">
-                  #01
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-serif-display text-xl font-bold text-[#0c111d]">Hackathon 2026</h3>
-                    <span className="bg-[#f59e0b] text-[#451a03] text-[9px] font-mono-code font-bold uppercase px-2 py-0.5 rounded-full flex items-center gap-1 border border-[#b45309]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#b45309]"></span> LIVE
-                    </span>
-                  </div>
-                  <p className="text-[13px] text-[#434656] mt-0.5">
-                    Create, manage, and join epic events.
-                  </p>
-                </div>
-              </div>
-              
-              {/* Capacity Bar & Gauge */}
-              <div className="space-y-1.5 my-5 bg-[#f5f4ef] p-3 border border-[#0c111d]/20">
-                <div className="flex justify-between text-[11px] font-mono-code">
-                  <span className="text-[#434656]">COHORT CAPACITY</span>
-                  <span className="font-bold text-[#0c111d]">72% ALLOCATED</span>
-                </div>
-                <div className="h-3 w-full bg-[#e2e7ff] border border-[#0c111d] overflow-hidden flex">
-                  <div className="bg-[#0c111d] h-full w-[54%]"></div>
-                  <div className="bg-[#f59e0b] h-full w-[18%]"></div>
-                  <div className="bg-transparent h-full w-[28%]"></div>
-                </div>
-                <div className="flex justify-between text-[10px] font-mono-code text-[#737688]">
-                  <span>[■ COMMITTED]</span>
-                  <span>[▨ RESERVED]</span>
-                  <span>[□ OPEN SLOTS]</span>
-                </div>
-              </div>
-              
-              {/* Team Avatars & Full status */}
-              <div className="border-t border-b border-[#0c111d] py-3.5 my-4 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="flex -space-x-1.5 font-mono-code text-[11px] font-bold">
-                    <span className="w-7 h-7 rounded bg-[#0c111d] text-[#fcfbf9] flex items-center justify-center border border-[#ffffff]">AK</span>
-                    <span className="w-7 h-7 rounded bg-[#283044] text-[#fcfbf9] flex items-center justify-center border border-[#ffffff]">RD</span>
-                    <span className="w-7 h-7 rounded bg-[#434656] text-[#fcfbf9] flex items-center justify-center border border-[#ffffff]">PS</span>
-                    <span className="w-7 h-7 rounded bg-[#b45309] text-[#f59e0b] flex items-center justify-center border border-[#ffffff]">MS</span>
-                  </div>
-                  <span className="text-[12px] font-mono-code font-semibold text-[#0c111d] ml-1">4 / 4 Team is full!</span>
-                </div>
-                <div className="text-right">
-                  <span className="font-mono-code font-bold text-sm text-[#0c111d]">2.4k</span>
-                  <p className="text-[10px] font-mono-code text-[#737688] uppercase">Registrations</p>
-                </div>
-              </div>
-              
-              {/* Snapshot Telemetry Bottom Foot */}
-              <div className="flex items-center justify-between text-[10px] font-mono-code text-[#434656] pt-1">
-                <span className="font-bold text-[#0c111d]">■ NETWORK SYSTEM: ACTIVE</span>
-                <span className="text-[#b45309] font-bold">01 // 03</span>
-              </div>
-            </div>
-            <div className="mt-4 border border-[#0c111d] p-3 bg-[#f5f4ef] flex items-center justify-between text-[11px] font-mono-code">
-              <span className="text-[#434656]">AFFILIATED COLLECTIVE</span>
-              <span className="font-bold text-[#0c111d]">DIATM TECH FORUM // AUTUMN '26</span>
-            </div>
-          </div>
-
-          {/* RIGHT COLUMN: Affiliation & Campus Credentials */}
-          <div className="lg:col-span-3 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center gap-2 border-b border-[#0c111d] pb-2 mb-4 font-mono-code text-[11px]">
-                <span className="w-2 h-2 bg-[#0c111d]"></span>
-                <span className="font-bold tracking-wider text-[#0c111d]">■ DISPATCH CREDENTIALS</span>
-              </div>
-              <div className="border border-[#0c111d] bg-[#ffffff] divide-y divide-[#0c111d]">
-                <div className="p-4">
-                  <p className="text-[10px] font-mono-code uppercase tracking-wider text-[#737688]">FOUNDED</p>
-                  <p className="text-base font-mono-code font-bold text-[#0c111d] mt-1">Durgapur, WB</p>
-                </div>
-                <div className="p-4">
-                  <p className="text-[10px] font-mono-code uppercase tracking-wider text-[#737688]">AFFILIATION</p>
-                  <p className="text-base font-mono-code font-bold text-[#0c111d] mt-1">Dept. of CSE &amp; IT</p>
-                </div>
-                <div className="p-4">
-                  <p className="text-[10px] font-mono-code uppercase tracking-wider text-[#737688]">STATUS</p>
-                  <div className="mt-1.5 flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-[#b45309]"></span>
-                    <span className="text-xs font-mono-code font-bold uppercase text-[#b45309] bg-[#f59e0b] px-2 py-0.5 border border-[#b45309]">
-                      Open Admissions
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="mt-6 border border-[#0c111d] p-4 bg-[#f5f4ef] font-mono-code text-[11px] text-[#434656] space-y-2">
-              <p className="font-bold text-[#0c111d] uppercase border-b border-[#0c111d]/20 pb-1.5">// DISPATCH VERIFICATION</p>
-              <p>COLLEGIATE ARCHITECTURAL EDITION</p>
-              <p>DEPARTMENT OF COMPUTER SCIENCE &amp; ENGINEERING</p>
-              <p className="text-[#737688]">RELEASE CODENAME: BROAD-MONO-07</p>
-            </div>
-          </div>
-        </div>
-
+        </section>
+        <EclipseScrollStory reduceMotion={reduceMotion} />
+        <main className="mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-8 lg:py-12">
         {/* SECTION 01: OUR IDENTITY */}
-        <section className="py-14 border-b-2 border-[#0c111d]" id="about">
-          <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-[#0c111d] pb-3 mb-8">
-            <div className="flex items-center gap-3">
-              <span className="font-mono-code font-bold text-sm text-[#0c111d]">01 / IDENTITY</span>
-              <span className="text-[#737688]">/</span>
-              <h2 className="font-serif-display text-3xl sm:text-4xl font-bold text-[#0c111d]">Who We Are &amp; Core Pillars</h2>
+        <section className="border-b border-[#eadbd1] py-20 sm:py-28" id="about">
+          <div className="mb-10 flex flex-wrap items-end justify-between gap-6 border-b border-[#eadbd1] pb-7 sm:mb-12">
+            <div>
+              <p className="font-mono-code text-[10px] uppercase tracking-[.2em] text-[#b85a2b]">01 / What brings us together</p>
+              <h2 className="mt-4 max-w-3xl font-heading text-4xl font-medium leading-[1.02] tracking-[-.06em] text-[#32231d] sm:text-6xl">Curiosity is a good place<br className="hidden sm:block" /> to start.</h2>
             </div>
-            <span className="font-mono-code text-[11px] text-[#737688] uppercase tracking-widest">ARCHITECTURAL MANIFESTO</span>
+            <span className="pb-1 font-mono-code text-[10px] uppercase tracking-[.14em] text-[#78685e]">ECLIPSE · DIATM</span>
           </div>
+          <p className="mb-9 max-w-3xl text-base leading-7 text-[#78685e] sm:text-lg sm:leading-8">A student-led tech community at DIATM, built around peer mentorship, hands-on practice, and the belief that you learn a lot by making something real.</p>
 
-          <div className="space-y-6">
-            {/* Narrative Card 1 */}
-            <div className="border border-[#0c111d] bg-[#ffffff] hover:shadow-[4px_4px_0px_0px_#0c111d] transition-shadow">
-              <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-[#0c111d]">
-                <div className="lg:col-span-3 p-6 bg-[#f5f4ef] flex flex-col justify-between">
-                  <div className="font-mono-code text-[11px]">
-                    <span className="font-bold text-[#0c111d]">01 / ARCH</span>
-                    <span className="block text-[#737688] mt-1">FOUNDATIONAL</span>
-                  </div>
-                  <h3 className="font-serif-display text-2xl font-bold text-[#0c111d] mt-4">Who We Are</h3>
-                </div>
-                <div className="lg:col-span-5 p-6 flex flex-col justify-between">
-                  <p className="font-body-md text-sm sm:text-base text-[#434656] leading-relaxed">
-                    A premier collegiate collective pushing technological boundaries, fostering peer mentorship and pioneering digital craft across systems, product design, and computation.
-                  </p>
-                  <Link className="inline-flex items-center gap-2 font-mono-code text-[11px] font-bold uppercase tracking-wider text-[#0c111d] hover:text-[#0045cc] mt-4 pt-4 border-t border-[#0c111d]/10" href="/about">
-                    <span>DISCOVER WHO WE ARE</span>
-                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                  </Link>
-                </div>
-                <div className="lg:col-span-4 p-6 bg-[#ffffff] flex items-center">
-                  <div className="w-full border-l-4 border-[#0c111d] pl-4 py-2 bg-[#f5f4ef] text-sm font-serif-display italic text-[#0c111d]">
-                    "Autonomous learning through collective execution."
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Narrative Card 2 */}
-            <div className="border border-[#0c111d] bg-[#ffffff] hover:shadow-[4px_4px_0px_0px_#0c111d] transition-shadow" id="mission">
-              <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-[#0c111d]">
-                <div className="lg:col-span-3 p-6 bg-[#f5f4ef] flex flex-col justify-between">
-                  <div className="font-mono-code text-[11px]">
-                    <span className="font-bold text-[#0c111d]">02 / CORE</span>
-                    <span className="block text-[#737688] mt-1">TRAJECTORY</span>
-                  </div>
-                  <h3 className="font-serif-display text-2xl font-bold text-[#0c111d] mt-4">Our Mission</h3>
-                </div>
-                <div className="lg:col-span-5 p-6 flex flex-col justify-between">
-                  <p className="font-body-md text-sm sm:text-base text-[#434656] leading-relaxed">
-                    To transform classroom theory into production-ready software and hardware engineering. We organize student sprints, hackathons, and technical bootcamps that cultivate industry readiness.
-                  </p>
-                  <Link className="inline-flex items-center gap-2 font-mono-code text-[11px] font-bold uppercase tracking-wider text-[#0c111d] hover:text-[#0045cc] mt-4 pt-4 border-t border-[#0c111d]/10" href="/mission">
-                    <span>EXPLORE OUR SPRINT SCHEDULE</span>
-                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                  </Link>
-                </div>
-                <div className="lg:col-span-4 p-6 bg-[#ffffff] flex items-center">
-                  <div className="w-full border-l-4 border-[#0c111d] pl-4 py-2 bg-[#f5f4ef] text-sm font-serif-display italic text-[#0c111d]">
-                    "Bridging the gap between academia and modern engineering."
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Narrative Card 3 */}
-            <div className="border border-[#0c111d] bg-[#ffffff] hover:shadow-[4px_4px_0px_0px_#0c111d] transition-shadow" id="vision">
-              <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-[#0c111d]">
-                <div className="lg:col-span-3 p-6 bg-[#f5f4ef] flex flex-col justify-between">
-                  <div className="font-mono-code text-[11px]">
-                    <span className="font-bold text-[#0c111d]">03 / HORIZON</span>
-                    <span className="block text-[#737688] mt-1">TARGET 2028</span>
-                  </div>
-                  <h3 className="font-serif-display text-2xl font-bold text-[#0c111d] mt-4">Our Vision</h3>
-                </div>
-                <div className="lg:col-span-5 p-6 flex flex-col justify-between">
-                  <p className="font-body-md text-sm sm:text-base text-[#434656] leading-relaxed">
-                    Establishing DIATM as an internationally recognized hub of student innovation, competitive programming excellence, and open-source contributions with scalable real-world utility.
-                  </p>
-                  <Link className="inline-flex items-center gap-2 font-mono-code text-[11px] font-bold uppercase tracking-wider text-[#0c111d] hover:text-[#0045cc] mt-4 pt-4 border-t border-[#0c111d]/10" href="/vision">
-                    <span>READ VISION ARCHIVE</span>
-                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                  </Link>
-                </div>
-                <div className="lg:col-span-4 p-6 bg-[#ffffff] flex items-center">
-                  <div className="w-full border-l-4 border-[#0c111d] pl-4 py-2 bg-[#f5f4ef] text-sm font-serif-display italic text-[#0c111d]">
-                    "Building institutions that outlast four-year degrees."
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            <article className="group flex min-h-[275px] flex-col rounded-[20px] border border-[#eadbd1] bg-[#fffdfb] p-6 transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-[#e9b99d] hover:shadow-[0_18px_40px_rgba(66,39,25,.07)] sm:p-8">
+              <div className="flex items-center justify-between font-mono-code text-[10px] uppercase tracking-[.16em] text-[#a38e80]"><span>01 / Foundational</span><span className="text-[#b85a2b]">↗</span></div>
+              <h3 className="mt-10 font-heading text-2xl font-medium tracking-[-.04em] text-[#32231d]">Who We Are</h3>
+              <p className="mt-3 text-sm leading-6 text-[#78685e]">A collegiate community where students explore technology, share what they know, and learn by making together.</p>
+              <p className="mt-5 border-t border-[#f0e6df] pt-4 text-xs italic text-[#9a8577]">“Autonomous learning through collective execution.”</p>
+              <Link className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-medium text-[#a94d25] transition-colors hover:text-[#68351f]" href="/about">Discover who we are <ArrowUpRight size={15} /></Link>
+            </article>
+            <article className="group flex min-h-[275px] flex-col rounded-[20px] border border-[#eadbd1] bg-[#fffdfb] p-6 transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-[#e9b99d] hover:shadow-[0_18px_40px_rgba(66,39,25,.07)] sm:p-8" id="mission">
+              <div className="flex items-center justify-between font-mono-code text-[10px] uppercase tracking-[.16em] text-[#a38e80]"><span>02 / Practice</span><span className="text-[#b85a2b]">↗</span></div>
+              <h3 className="mt-10 font-heading text-2xl font-medium tracking-[-.04em] text-[#32231d]">Our Mission</h3>
+              <p className="mt-3 text-sm leading-6 text-[#78685e]">Turn classroom ideas into useful software and hardware through student sprints, hackathons, and technical bootcamps.</p>
+              <p className="mt-5 border-t border-[#f0e6df] pt-4 text-xs italic text-[#9a8577]">“Bridging academia and modern engineering.”</p>
+              <Link className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-medium text-[#a94d25] transition-colors hover:text-[#68351f]" href="/about">Explore our mission <ArrowUpRight size={15} /></Link>
+            </article>
+            <article className="group flex min-h-[275px] flex-col rounded-[20px] border border-[#eadbd1] bg-[#fffdfb] p-6 transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-[#e9b99d] hover:shadow-[0_18px_40px_rgba(66,39,25,.07)] sm:p-8" id="vision">
+              <div className="flex items-center justify-between font-mono-code text-[10px] uppercase tracking-[.16em] text-[#a38e80]"><span>03 / Horizon</span><span className="text-[#b85a2b]">↗</span></div>
+              <h3 className="mt-10 font-heading text-2xl font-medium tracking-[-.04em] text-[#32231d]">Our Vision</h3>
+              <p className="mt-3 text-sm leading-6 text-[#78685e]">Grow DIATM into a hub for student innovation, competitive programming, and open-source work with real-world value.</p>
+              <p className="mt-5 border-t border-[#f0e6df] pt-4 text-xs italic text-[#9a8577]">“Building institutions that outlast four-year degrees.”</p>
+              <Link className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-medium text-[#a94d25] transition-colors hover:text-[#68351f]" href="/about">Read our vision <ArrowUpRight size={15} /></Link>
+            </article>
           </div>
         </section>
 
         {/* SECTION 02: SUCCESSFUL EVENTS */}
-        <section className="py-14 border-b-2 border-[#0c111d]" id="achievements">
-          <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-[#0c111d] pb-3 mb-8">
-            <div className="flex items-center gap-3">
-              <span className="font-mono-code font-bold text-sm text-[#0c111d]">02 / RECORD</span>
-              <span className="text-[#737688]">/</span>
-              <h2 className="font-serif-display text-3xl sm:text-4xl font-bold text-[#0c111d]">Successful Events &amp; Retrospectives</h2>
-            </div>
-            <span className="font-mono-code text-[11px] text-[#737688] uppercase tracking-widest">ARCHIVE // 2025-2026</span>
+        <section className="border-b border-[#eadbd1] py-20 sm:py-28" id="achievements">
+          <div className="mb-10 flex flex-wrap items-end justify-between gap-6 border-b border-[#eadbd1] pb-7 sm:mb-12">
+            <div><p className="font-mono-code text-[10px] uppercase tracking-[.2em] text-[#b85a2b]">02 / Work in the world</p><h2 className="mt-4 max-w-3xl font-heading text-4xl font-medium leading-[1.02] tracking-[-.06em] text-[#32231d] sm:text-6xl">Good ideas deserve<br className="hidden sm:block" /> a real first build.</h2></div>
+            <span className="pb-1 font-mono-code text-[10px] uppercase tracking-[.14em] text-[#78685e]">Selected community work</span>
           </div>
 
-          <div className="border-2 border-[#0c111d] bg-[#ffffff] grid grid-cols-1 lg:grid-cols-12 overflow-hidden shadow-[5px_5px_0px_0px_#0c111d]">
-            <div className="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-between bg-[#ffffff] border-b lg:border-b-0 lg:border-r border-[#0c111d]">
+          <article className="grid overflow-hidden rounded-[22px] border border-[#eadbd1] bg-[#fffdfb] lg:grid-cols-[1.08fr_.92fr]">
+            <div className="flex flex-col justify-between p-6 sm:p-10 lg:p-12">
               <div>
-                <div className="flex flex-wrap items-center gap-2 mb-3 font-mono-code text-[11px]">
-                  <span className="text-[#b45309] font-bold">ANNUAL FLAGSHIP SPRINT</span>
-                  <span className="text-[#737688]">•</span>
-                  <span className="text-[#737688]">CONCLUDED FEB 2026</span>
+                <div className="mb-4 flex flex-wrap items-center gap-2 font-mono-code text-[10px] uppercase tracking-[.14em]">
+                  <span className="text-[#b85a2b]">Annual flagship sprint</span><span className="text-[#c9b7aa]">·</span><span className="text-[#927f72]">Concluded Feb 2026</span>
                 </div>
-                <h3 className="font-serif-display text-3xl sm:text-4xl font-bold text-[#0c111d] mb-4 leading-tight">
+                <h3 className="mb-4 font-heading text-3xl font-medium leading-tight tracking-[-.045em] text-[#32231d] sm:text-4xl">
                   Zero to Hackathon: Build and Break
                 </h3>
-                <p className="font-body-md text-base text-[#434656] leading-relaxed mb-6">
+                <p className="mb-8 max-w-2xl text-sm leading-7 text-[#78685e] sm:text-base sm:leading-8">
                   A 24-hour sprint that immersed students from first-year basics through building fully operational full-stack web and IoT prototypes. 36 projects were judged by industry alumni from leading tech giants.
                 </p>
-                <div className="grid grid-cols-3 border border-[#0c111d] bg-[#f5f4ef] mb-6 divide-x divide-[#0c111d]">
-                  <div className="p-3.5 text-center">
-                    <p className="font-mono-code text-2xl font-bold text-[#0c111d]">120+</p>
-                    <p className="text-[10px] font-mono-code uppercase text-[#737688] mt-0.5">Builders</p>
+                <div className="grid grid-cols-3 border-y border-[#eadbd1] py-5">
+                  <div className="text-left">
+                    <p className="font-heading text-2xl font-medium text-[#32231d]">120+</p>
+                    <p className="mt-1 font-mono-code text-[9px] uppercase tracking-[.12em] text-[#927f72]">Builders</p>
                   </div>
-                  <div className="p-3.5 text-center">
-                    <p className="font-mono-code text-2xl font-bold text-[#0c111d]">36</p>
-                    <p className="text-[10px] font-mono-code uppercase text-[#737688] mt-0.5">Projects</p>
+                  <div className="border-l border-[#eadbd1] pl-5">
+                    <p className="font-heading text-2xl font-medium text-[#32231d]">36</p>
+                    <p className="mt-1 font-mono-code text-[9px] uppercase tracking-[.12em] text-[#927f72]">Projects</p>
                   </div>
-                  <div className="p-3.5 text-center">
-                    <p className="font-mono-code text-2xl font-bold text-[#0c111d]">24h</p>
-                    <p className="text-[10px] font-mono-code uppercase text-[#737688] mt-0.5">Continuous</p>
+                  <div className="border-l border-[#eadbd1] pl-5">
+                    <p className="font-heading text-2xl font-medium text-[#32231d]">24h</p>
+                    <p className="mt-1 font-mono-code text-[9px] uppercase tracking-[.12em] text-[#927f72]">Continuous</p>
                   </div>
                 </div>
               </div>
-              <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[#0c111d]/20 font-mono-code text-xs">
-                <span className="text-[#434656]">WINNER: TEAM CYBER-SYNTHESIS</span>
-                <Link className="bg-[#0c111d] text-[#fcfbf9] px-5 py-2.5 font-bold uppercase tracking-wider hover:bg-[#f59e0b] hover:text-[#0c111d] hover:shadow-[3px_3px_0px_0px_#0c111d] border border-[#0c111d] transition-colors text-center" href="/achievements">
-                  VIEW EVENT RECAP &amp; SUBMISSIONS →
+              <div className="mt-7 flex flex-wrap items-center justify-between gap-4">
+                <span className="font-mono-code text-[10px] uppercase tracking-[.1em] text-[#927f72]">Winner · Team Cyber-Synthesis</span>
+                <Link className="group inline-flex min-h-11 items-center gap-2 rounded-full bg-[#41271c] px-5 text-sm font-medium text-white transition-colors hover:bg-[#b85a2b]" href="/gallery/events">
+                  View event recap <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </Link>
               </div>
             </div>
-            <div className="lg:col-span-5 relative min-h-[360px] bg-[#f5f4ef]">
-              <div className="w-full h-full bg-cover bg-center absolute inset-0 filter grayscale hover:grayscale-0 transition-all duration-500" style={{ backgroundImage: "url('/zero-to-hackathon/photos/20260825_151418.jpg')" }}></div>
-              <div className="absolute top-3 left-3 bg-[#0c111d] text-[#f59e0b] px-2.5 py-1 text-[10px] font-mono-code font-bold uppercase tracking-wider">
-                CASE STUDY // EVENT #04
-              </div>
-              <div className="absolute bottom-3 right-3 bg-[#ffffff] border border-[#0c111d] px-2.5 py-1 text-[10px] font-mono-code font-semibold shadow-sm">
-                STATUS: COMPLETED
-              </div>
+            <div className="relative min-h-[300px] overflow-hidden bg-[#f0e6df] lg:min-h-[500px]">
+              <div className="absolute inset-0 bg-cover bg-center grayscale transition-[filter,transform] duration-700 hover:scale-[1.02] hover:grayscale-0" style={{ backgroundImage: "url('/zero-to-hackathon/photos/20260825_151418.jpg')" }} role="img" aria-label="ECLIPSE students presenting at the Zero to Hackathon event" />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#1b120e]/65 to-transparent px-6 pb-6 pt-20 font-mono-code text-[9px] uppercase tracking-[.14em] text-white/80 sm:px-8 sm:pb-8">Zero to Hackathon · Event 04</div>
             </div>
-          </div>
+          </article>
         </section>
 
-        {/* SECTION 03: TECHNOLOGIES WE WORK WITH */}
-        <section className="py-14 border-b-2 border-[#0c111d]">
-          <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-[#0c111d] pb-3 mb-6">
-            <div className="flex items-center gap-3">
-              <span className="font-mono-code font-bold text-sm text-[#0c111d]">03 / STACK</span>
-              <span className="text-[#737688]">/</span>
-              <h2 className="font-serif-display text-3xl sm:text-4xl font-bold text-[#0c111d]">Technologies We Work With</h2>
-            </div>
-            <span className="font-mono-code text-[11px] text-[#737688] uppercase tracking-widest">ACTIVE TOOLCHAINS // V26</span>
-          </div>
-
-          <div className="border-y-2 border-[#0c111d] bg-[#ffffff] overflow-hidden py-3 my-4">
-            <div className="animate-marquee flex items-center gap-8">
-              {/* Set 1 */}
-              <div className="flex items-center gap-8 font-mono-code shrink-0">
-                <div className="flex items-center gap-3 px-3">
-                  <span className="font-black text-2xl text-[#0c111d]">React</span>
-                  <span className="text-[10px] uppercase text-[#737688] bg-[#f5f4ef] px-2 py-0.5 border border-[#0c111d]/20">Frontend UI</span>
-                </div>
-                <span className="text-[#0c111d]/30 font-bold">/</span>
-                <div className="flex items-center gap-3 px-3">
-                  <span className="font-black text-2xl text-[#0c111d]">Python</span>
-                  <span className="text-[10px] uppercase text-[#737688] bg-[#f5f4ef] px-2 py-0.5 border border-[#0c111d]/20">Algorithms &amp; AI</span>
-                </div>
-                <span className="text-[#0c111d]/30 font-bold">/</span>
-                <div className="flex items-center gap-3 px-3">
-                  <span className="font-black text-2xl text-[#0c111d]">Next.js</span>
-                  <span className="text-[10px] uppercase text-[#737688] bg-[#f5f4ef] px-2 py-0.5 border border-[#0c111d]/20">Full-Stack</span>
-                </div>
-                <span className="text-[#0c111d]/30 font-bold">/</span>
-                <div className="flex items-center gap-3 px-3">
-                  <span className="font-black text-2xl text-[#0c111d]">TypeScript</span>
-                  <span className="text-[10px] uppercase text-[#737688] bg-[#f5f4ef] px-2 py-0.5 border border-[#0c111d]/20">Type Systems</span>
-                </div>
-                <span className="text-[#0c111d]/30 font-bold">/</span>
-                <div className="flex items-center gap-3 px-3">
-                  <span className="font-black text-2xl text-[#0c111d]">Node.js</span>
-                  <span className="text-[10px] uppercase text-[#737688] bg-[#f5f4ef] px-2 py-0.5 border border-[#0c111d]/20">Runtime</span>
-                </div>
-                <span className="text-[#0c111d]/30 font-bold">/</span>
-                <div className="flex items-center gap-3 px-3">
-                  <span className="font-black text-2xl text-[#0c111d]">Arduino</span>
-                  <span className="text-[10px] uppercase text-[#737688] bg-[#f5f4ef] px-2 py-0.5 border border-[#0c111d]/20">Hardware / IoT</span>
-                </div>
-                <span className="text-[#0c111d]/30 font-bold">/</span>
-                <div className="flex items-center gap-3 px-3">
-                  <span className="font-black text-2xl text-[#0c111d]">TensorFlow</span>
-                  <span className="text-[10px] uppercase text-[#737688] bg-[#f5f4ef] px-2 py-0.5 border border-[#0c111d]/20">Machine Learning</span>
-                </div>
-                <span className="text-[#0c111d]/30 font-bold">/</span>
-                <div className="flex items-center gap-3 px-3">
-                  <span className="font-black text-2xl text-[#0c111d]">Figma</span>
-                  <span className="text-[10px] uppercase text-[#737688] bg-[#f5f4ef] px-2 py-0.5 border border-[#0c111d]/20">Interface Systems</span>
-                </div>
-                <span className="text-[#0c111d]/30 font-bold">/</span>
-              </div>
-              
-              {/* Duplicate Set for Seamless Continuous Marquee */}
-              <div aria-hidden="true" className="flex items-center gap-8 font-mono-code shrink-0">
-                <div className="flex items-center gap-3 px-3">
-                  <span className="font-black text-2xl text-[#0c111d]">React</span>
-                  <span className="text-[10px] uppercase text-[#737688] bg-[#f5f4ef] px-2 py-0.5 border border-[#0c111d]/20">Frontend UI</span>
-                </div>
-                <span className="text-[#0c111d]/30 font-bold">/</span>
-                <div className="flex items-center gap-3 px-3">
-                  <span className="font-black text-2xl text-[#0c111d]">Python</span>
-                  <span className="text-[10px] uppercase text-[#737688] bg-[#f5f4ef] px-2 py-0.5 border border-[#0c111d]/20">Algorithms &amp; AI</span>
-                </div>
-                <span className="text-[#0c111d]/30 font-bold">/</span>
-                <div className="flex items-center gap-3 px-3">
-                  <span className="font-black text-2xl text-[#0c111d]">Next.js</span>
-                  <span className="text-[10px] uppercase text-[#737688] bg-[#f5f4ef] px-2 py-0.5 border border-[#0c111d]/20">Full-Stack</span>
-                </div>
-                <span className="text-[#0c111d]/30 font-bold">/</span>
-                <div className="flex items-center gap-3 px-3">
-                  <span className="font-black text-2xl text-[#0c111d]">TypeScript</span>
-                  <span className="text-[10px] uppercase text-[#737688] bg-[#f5f4ef] px-2 py-0.5 border border-[#0c111d]/20">Type Systems</span>
-                </div>
-                <span className="text-[#0c111d]/30 font-bold">/</span>
-                <div className="flex items-center gap-3 px-3">
-                  <span className="font-black text-2xl text-[#0c111d]">Node.js</span>
-                  <span className="text-[10px] uppercase text-[#737688] bg-[#f5f4ef] px-2 py-0.5 border border-[#0c111d]/20">Runtime</span>
-                </div>
-                <span className="text-[#0c111d]/30 font-bold">/</span>
-                <div className="flex items-center gap-3 px-3">
-                  <span className="font-black text-2xl text-[#0c111d]">Arduino</span>
-                  <span className="text-[10px] uppercase text-[#737688] bg-[#f5f4ef] px-2 py-0.5 border border-[#0c111d]/20">Hardware / IoT</span>
-                </div>
-                <span className="text-[#0c111d]/30 font-bold">/</span>
-                <div className="flex items-center gap-3 px-3">
-                  <span className="font-black text-2xl text-[#0c111d]">TensorFlow</span>
-                  <span className="text-[10px] uppercase text-[#737688] bg-[#f5f4ef] px-2 py-0.5 border border-[#0c111d]/20">Machine Learning</span>
-                </div>
-                <span className="text-[#0c111d]/30 font-bold">/</span>
-                <div className="flex items-center gap-3 px-3">
-                  <span className="font-black text-2xl text-[#0c111d]">Figma</span>
-                  <span className="text-[10px] uppercase text-[#737688] bg-[#f5f4ef] px-2 py-0.5 border border-[#0c111d]/20">Interface Systems</span>
-                </div>
-                <span className="text-[#0c111d]/30 font-bold">/</span>
-              </div>
-            </div>
-          </div>
-          
-          <div className="mt-3 p-2.5 bg-[#f5f4ef] border border-[#0c111d] flex flex-wrap items-center justify-between text-[11px] font-mono-code text-[#434656]">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-[#b45309]"></span>
-              <span>COMPUTE REPO: DIATM-ECLLIPSE / LAB-INFRA</span>
-            </div>
-            <div>
-              <span>CI/CD PIPELINE: PASSED [100%]</span>
-            </div>
-          </div>
-        </section>
 
         {/* SECTION 05: COMPACT CENTERED COLLEGIATE ANNOUNCEMENT BLOCK */}
         <section className="py-14" id="register">
@@ -499,13 +176,7 @@ export default function Home() {
             <div className="absolute -right-10 -top-10 opacity-10 z-0">
               <span className="text-[120px] font-mono-code leading-none">[]</span>
             </div>
-            <div className="relative z-10 text-[10px] font-mono-code text-[#737688] tracking-widest uppercase mb-4">
-              ADMISSION BATCH: AUTUMN 2026 // SLOTS LIMITED
-            </div>
-            <div className="inline-flex items-center gap-2 bg-[#ffffff]/10 text-[#f59e0b] px-3.5 py-1 rounded text-xs font-mono-code uppercase font-semibold mb-6">
-              <span className="w-2 h-2 rounded-full bg-[#f59e0b] animate-pulse"></span>
-              <span>OPEN ADMISSIONS RECRUITMENT</span>
-            </div>
+
             <h2 className="font-serif-display text-3xl sm:text-5xl font-extrabold text-[#fcfbf9] leading-tight mb-4">
               Ready to outshine the ordinary?
             </h2>
@@ -530,6 +201,7 @@ export default function Home() {
         </section>
       </main>
 
+      </>
       <Footer />
     </div>
   );

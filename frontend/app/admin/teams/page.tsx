@@ -117,7 +117,7 @@ export default function AdminTeamsPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-[2rem] border border-black shadow-none border border-black p-6 mb-8">
+      <div className="bg-white rounded-none border border-black shadow-none p-6 mb-8">
         <div className="relative max-w-md">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           <input 
@@ -131,7 +131,7 @@ export default function AdminTeamsPage() {
       </div>
 
       {filteredTeams.length === 0 ? (
-        <div className="bg-white rounded-[2rem] border border-dashed border-black p-12 text-center shadow-none border border-black">
+        <div className="bg-white rounded-none border border-dashed border-black p-12 text-center shadow-none">
           <div className="w-16 h-16 bg-white rounded-none flex items-center justify-center mx-auto mb-4">
             <Component className="w-8 h-8 text-gray-400" />
           </div>
@@ -152,7 +152,7 @@ export default function AdminTeamsPage() {
             const isExpanded = expandedEvents[eventId] !== false; // Default true
 
             return (
-              <div key={eventId} className="bg-white rounded-[2rem] border border-black shadow-none border border-black overflow-hidden">
+              <div key={eventId} className="bg-white rounded-none border border-black shadow-none overflow-hidden">
                 <div 
                   className="p-6 flex items-center justify-between cursor-pointer hover:bg-neutral-50 transition-colors"
                   onClick={() => setExpandedEvents(prev => ({ ...prev, [eventId]: !isExpanded }))}

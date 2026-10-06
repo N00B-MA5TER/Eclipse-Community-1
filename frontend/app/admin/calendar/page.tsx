@@ -150,14 +150,14 @@ export default function AdminCalendarPage() {
         </div>
         <button 
           onClick={() => openModal()}
-          className="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20 flex items-center gap-2"
+          className="bg-blue-600 text-white px-4 py-2 rounded-none text-sm font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20 flex items-center gap-2"
         >
           <Plus className="w-4 h-4" />
           Add Event
         </button>
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-none border border-gray-100 shadow-sm overflow-hidden">
         {loading ? (
           <div className="p-12 flex justify-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
@@ -230,7 +230,7 @@ export default function AdminCalendarPage() {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden" onClick={e => e.stopPropagation()}>
+          <div className="bg-white rounded-none shadow-xl w-full max-w-md overflow-hidden" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center p-6 border-b border-gray-100">
               <h2 className="text-xl font-bold text-slate-900">
                 {editingEvent ? "Edit Event" : "Add Event"}
@@ -319,13 +319,13 @@ export default function AdminCalendarPage() {
                 <button 
                   type="button" 
                   onClick={closeModal}
-                  className="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
+                  className="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-none transition-colors"
                 >
                   Cancel
                 </button>
                 <button 
                   type="submit"
-                  className="px-6 py-2 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-600/20 transition-all"
+                  className="px-6 py-2 bg-blue-600 text-white text-sm font-semibold rounded-none hover:bg-blue-700 shadow-lg shadow-blue-600/20 transition-all"
                 >
                   {editingEvent ? "Save Changes" : "Create Event"}
                 </button>

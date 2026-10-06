@@ -3,6 +3,7 @@
 import { useAuth } from "@/lib/firebase/auth";
 import { useEffect, useState } from "react";
 import { UpcomingEvents } from "@/components/dashboard/UpcomingEvents";
+import Link from "next/link";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -65,12 +66,12 @@ export default function Dashboard() {
           </div>
           {/* Quick Action Buttons */}
           <div className="flex items-center gap-3 pb-1">
-            <button className="px-6 py-3 bg-black hover:bg-[#f59e0b] text-white hover:text-black font-mono text-xs uppercase tracking-wider font-bold rounded-none border border-black shadow-[3px_3px_0px_0px_#000000] hover:shadow-none transition-smooth flex items-center gap-2 group" type="button">
-              <svg className="w-3.5 h-3.5 text-[#f59e0b] group-hover:text-black transition-colors" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <Link href="/dashboard" className="px-6 py-3 bg-[#0f172a] hover:bg-black text-white font-mono text-xs uppercase tracking-wider font-bold rounded-none border border-black shadow-[3px_3px_0px_0px_#000000] hover:shadow-none transition-smooth flex items-center gap-2 group" type="button">
+              <svg className="w-3.5 h-3.5 text-[#f59e0b] group-hover:text-white transition-colors" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"></path>
               </svg>
               <span>Join New Event</span>
-            </button>
+            </Link>
           </div>
         </div>
         
