@@ -27,17 +27,21 @@ class TeamRegistrationController extends Controller
 
         $user = $request->user();
 
-        // Check if user is already in a team
-        if (TeamMember::where('user_id', $user->id)->exists()) {
-            return response()->json(['error' => 'You are already in a team.'], 400);
+        // Point Break event ID = 6 (event_id=1 is Zero to Hackathon)
+        $eventId = 6;
+
+        // Check if user is already in a team FOR THIS SPECIFIC EVENT
+        $alreadyInTeam = TeamMember::whereHas('team', function ($q) use ($eventId) {
+            $q->where('event_id', $eventId);
+        })->where('user_id', $user->id)->exists();
+
+        if ($alreadyInTeam) {
+            return response()->json(['error' => 'You are already in a team for this event.'], 400);
         }
         if ($request->leader_name) {
             $user->name = $request->leader_name;
             $user->save();
         }
-
-        // Point Break event ID, adjust if necessary
-        $eventId = 1; 
         
         $team = Team::create([
             'event_id' => $eventId,
@@ -147,9 +151,9 @@ class TeamRegistrationController extends Controller
 
     public function getAdminTeams(Request $request)
     {
-        // Event ID 1 is Point Break
+        // Event ID 6 is Point Break (event_id=1 is Zero to Hackathon)
         $teams = Team::with(['leader', 'teamMembers.user', 'joinRequests'])
-                     ->where('event_id', 1)
+                     ->where('event_id', 6)
                      ->orderBy('created_at', 'desc')
                      ->get();
 
