@@ -98,6 +98,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/calendar-events', [\App\Http\Controllers\CalendarEventController::class, 'store']);
         Route::put('/calendar-events/{id}', [\App\Http\Controllers\CalendarEventController::class, 'update']);
         Route::delete('/calendar-events/{id}', [\App\Http\Controllers\CalendarEventController::class, 'destroy']);
+
+        // Admin Point Break Routes
+        Route::get('/point-break/teams', [\App\Http\Controllers\TeamRegistrationController::class, 'getAdminTeams']);
     });
     // Teams
     Route::prefix('teams')->group(function () {
@@ -126,6 +129,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/mark-read', [NotificationController::class, 'markRead']);
     });
 
-
-
+    // Point Break Team Registration
+    Route::prefix('point-break')->group(function () {
+        Route::post('/register', [\App\Http\Controllers\TeamRegistrationController::class, 'register']);
+        Route::get('/invites', [\App\Http\Controllers\TeamRegistrationController::class, 'getInvites']);
+        Route::post('/invites/{id}/accept', [\App\Http\Controllers\TeamRegistrationController::class, 'acceptInvite']);
+        Route::post('/invites/{id}/reject', [\App\Http\Controllers\TeamRegistrationController::class, 'rejectInvite']);
+        Route::delete('/teams/{id}', [\App\Http\Controllers\TeamRegistrationController::class, 'deleteTeam']);
+    });
 });
